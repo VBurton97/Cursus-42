@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
+/*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 19:39:35 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/15 09:50:35 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/16 13:43:48 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_start(char const *s1, char const *set)
+size_t	ft_start(char const *s1, char const *set)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (s1[i])
@@ -26,9 +26,9 @@ int	ft_start(char const *s1, char const *set)
 	return (i);
 }
 
-int	ft_end(char const *s1, char const *set)
+size_t	ft_end(char const *s1, char const *set)
 {
-	int	j;
+	size_t	j;
 
 	j = ft_strlen((char *)s1);
 	while (j > 0)
@@ -42,9 +42,9 @@ int	ft_end(char const *s1, char const *set)
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	int		i;
-	int		j;
-	int		len;
+	size_t	i;
+	size_t	j;
+	size_t	len;
 	char	*res;
 
 	if (s1 == NULL)
