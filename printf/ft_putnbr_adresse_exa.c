@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
+/*   ft_putnbr_adresse_exa.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/08 14:31:30 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/17 16:17:54 by vburton          ###   ########.fr       */
+/*   Created: 2022/11/17 17:47:04 by vburton           #+#    #+#             */
+/*   Updated: 2022/11/17 19:00:22 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<unistd.h>
+#include "ft_printf.h"
 
-int	base_conforme(char *str)
+int	base_conforme_exa(char *str)
 {
 	int	i;
 	int	j;
@@ -38,7 +38,7 @@ int	base_conforme(char *str)
 	return (1);
 }
 
-int	ft_strlen_base(char *base)
+int	ft_strlen_base_exa(char *base)
 {
 	int	i;
 
@@ -51,28 +51,29 @@ int	ft_strlen_base(char *base)
 		return (0);
 }
 
-void	ft_write(int nbr, char *base, int t_base)
+int	ft_write_exa(unsigned long long nbr, char *base, unsigned long long t_base, int len)
 {
 	if (nbr < t_base && nbr >= 0)
 		write(1, &base[nbr], 1);
-	if (nbr < 0 && nbr > -t_base)
-		write(1, &base[nbr * -1], 1);
-	if (nbr >= t_base || nbr <= (t_base * -1))
+	if (nbr >= t_base )
 	{
-		ft_write(nbr / t_base, base, t_base);
-		ft_write(nbr % t_base, base, t_base);
+		len = ft_write_exa(nbr / t_base, base, t_base, len);
+		ft_write_exa(nbr % t_base, base, t_base, len);
 	}
+	len++;
+	return (len);
 }
 
-void	ft_putnbr_base(int nbr, char *base)
+int	ft_putnbr_base_exa(unsigned long long nbr, char *base, int len)
 {
-	int	t_base;
+	unsigned long long	t_base;
 
-	t_base = ft_strlen_base(base);
-	if (base_conforme(base) == 1 && t_base > 1)
+	t_base = ft_strlen_base_exa(base);
+	if (base_conforme_exa(base) == 1 && t_base > 1)
 	{
-		if (nbr < 0)
-			write(1, "-", 1);
-		ft_write(nbr, base, t_base);
+		write(1, "0x", 2);
+		len = ft_write_exa(nbr, base, t_base, len);
+		len += 2;
 	}
+	return (len);
 }
