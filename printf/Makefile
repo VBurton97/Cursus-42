@@ -10,7 +10,8 @@ SRC 	:= ft_printf.c \
 			ft_putnbr.c \
 			ft_putnbr_base.c \
 			ft_putstr.c \
-			ft_putnbr_adresse_exa.c
+			ft_putnbr_adresse_exa.c \
+			ft_putnbr_unsigned.c
 
 ######### Compileur and various options ########
 CC 		:=	 cc

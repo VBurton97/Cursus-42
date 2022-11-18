@@ -5,22 +5,34 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/17 11:03:51 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/17 12:19:36 by vburton          ###   ########.fr       */
+/*   Created: 2022/11/08 18:31:30 by vburton           #+#    #+#             */
+/*   Updated: 2022/11/18 12:35:33 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_putnbr(unsigned int n, int len)
+#include "ft_printf.h"
+
+int	ft_putnbr_unsigned(int n, int len)
 {
-	if (n < 10 && n >= 0)
+	unsigned long int	nbis;
+
+	nbis = (unsigned)n;
+	if (nbis < 10 && nbis >= 0)
 	{
-		n = n + 48;
-		ft_putchar(n);
+		nbis = nbis + 48;
+		ft_putchar(nbis);
+	}
+	else if (nbis < 0)
+	{
+		ft_putchar('-');
+		len = ft_putnbr(nbis * -1, len);
 	}
 	else
 	{
-		ft_putnbr_fd(n / 10);
-		ft_putnbr_fd(n % 10);
+		len = ft_putnbr(nbis / 10, len);
+		ft_putnbr(nbis % 10, len);
 	}
-	return (1 + )
+	len++;
+	return (len);
 }
+

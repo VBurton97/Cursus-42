@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:35:14 by victor            #+#    #+#             */
-/*   Updated: 2022/11/17 18:46:34 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/18 15:08:16 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ int	ft_case(char c, va_list res, int len)
 	else if (c == 's')
 		len += ft_putstr(va_arg(res, char *));
 	else if (c == 'p')
-		len = ft_putnbr_base_exa(va_arg(res, unsigned long long), "0123456789abcdef", len);
+		len = ft_putnbr_base_exa(va_arg(res, unsigned long long), len);
 	else if (c == 'd')
 		len = ft_putnbr(va_arg(res, int), len);
 	else if (c == 'i')
 		len = ft_putnbr(va_arg(res, int), len);
 	else if (c == 'u')
-		len = ft_putnbr(va_arg(res, int), len);
+		len = ft_putnbr_unsigned(va_arg(res, int), len);
 	else if (c == 'x')
-		len = ft_putnbr_base(va_arg(res, int), "0123456789abcdef", len);
+		len = ft_putnbr_base(va_arg(res, unsigned long long), "0123456789abcdef", len);
 	else if (c == 'X')
 		len = ft_putnbr_base(va_arg(res, int), "0123456789ABCDEF", len);
 	else if (c == '%')

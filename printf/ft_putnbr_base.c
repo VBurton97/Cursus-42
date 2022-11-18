@@ -6,78 +6,26 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 14:31:30 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/17 18:01:06 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/18 15:10:40 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	base_conforme(char *str)
+int	ft_write(unsigned int nbr, char *base, int len)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	if (str[0])
-	{
-		while (str[i])
-		{
-			j = i + 1;
-			while (str[j])
-			{
-				if ((str[i] == str[j] && j != i) \
-						|| str[j] == '+' || str[i] == '-')
-				{
-					return (0);
-				}
-				j++;
-			}
-		i++;
-		}
-	}
-	return (1);
-}
-
-int	ft_strlen_base(char *base)
-{
-	int	i;
-
-	i = 0;
-	while (base[i])
-		i++;
-	if (i > 1)
-		return (i);
-	else
-		return (0);
-}
-
-int	ft_write(int nbr, char *base, int t_base, int len)
-{
-	if (nbr < t_base && nbr >= 0)
+	if (nbr < 16 && nbr >= 0)
 		write(1, &base[nbr], 1);
-	if (nbr < 0 && nbr > -t_base)
-		write(1, &base[nbr * -1], 1);
-	if (nbr >= t_base || nbr <= (t_base * -1))
+	else
 	{
-		len = ft_write(nbr / t_base, base, t_base, len);
-		len = ft_write(nbr % t_base, base, t_base, len);
+		len += ft_write(nbr / 16, base, len);
+		ft_write(nbr % 16, base, len);
 	}
 	return (len++);
 }
 
-int	ft_putnbr_base(int nbr, char *base, int len)
+int	ft_putnbr_base(unsigned int nbr, char *base, int len)
 {
-	int	t_base;
-
-	t_base = ft_strlen_base(base);
-	if (base_conforme(base) == 1 && t_base > 1)
-	{
-		if (nbr < 0)
-		{
-			write(1, "-", 1);
-			len++;
-		}
-		len += ft_write(nbr, base, t_base, len);
-	}
+	len += ft_write(nbr, base, len);
 	return (len);
 }
