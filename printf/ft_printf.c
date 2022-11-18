@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:35:14 by victor            #+#    #+#             */
-/*   Updated: 2022/11/18 15:08:16 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/18 15:41:31 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	ft_case(char c, va_list res, int len)
 	else if (c == 'u')
 		len = ft_putnbr_unsigned(va_arg(res, int), len);
 	else if (c == 'x')
-		len = ft_putnbr_base(va_arg(res, unsigned long long), "0123456789abcdef", len);
+		len = ft_putnbr_base(va_arg(res, unsigned long long), EXA_DOWN, len);
 	else if (c == 'X')
-		len = ft_putnbr_base(va_arg(res, int), "0123456789ABCDEF", len);
+		len = ft_putnbr_base(va_arg(res, int), EXA_UP, len);
 	else if (c == '%')
 		len += ft_putchar('%');
 	return (len);
@@ -43,10 +43,12 @@ int	ft_printf(const char *str, ...)
 
 	i = 0;
 	ibis = 0;
+	if (write(1, NULL, 0))
+		return (-1);
 	va_start(lst, str);
 	while (str[i])
 	{
-		if (str[i] == '%' && str[i - 1] != '%')
+		if (str[i] == '%')
 		{
 			ibis = ft_case(str[i + 1], lst, ibis);
 			i++;
