@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:35:14 by victor            #+#    #+#             */
-/*   Updated: 2022/11/18 15:41:31 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/21 18:47:19 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@ int	ft_case(char c, va_list res, int len)
 	else if (c == 's')
 		len += ft_putstr(va_arg(res, char *));
 	else if (c == 'p')
-		len = ft_putnbr_base_exa(va_arg(res, unsigned long long), len);
-	else if (c == 'd')
-		len = ft_putnbr(va_arg(res, int), len);
-	else if (c == 'i')
+		len = ft_putnbr_base_hexa(va_arg(res, unsigned long long), len);
+	else if (c == 'd' || c == 'i')
 		len = ft_putnbr(va_arg(res, int), len);
 	else if (c == 'u')
 		len = ft_putnbr_unsigned(va_arg(res, int), len);
@@ -63,3 +61,4 @@ int	ft_printf(const char *str, ...)
 	va_end(lst);
 	return (ibis);
 }
+
