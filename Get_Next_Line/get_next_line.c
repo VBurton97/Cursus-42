@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:26:49 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/21 20:53:36 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/21 21:35:43 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,17 @@ char	*get_next_line(int fd)
 	char	*clnbis;
 	char	*next_line;
 
-	i = 0;
 	if (fd <= 0)
 		return (NULL);
 	r = read(fd, buffer, BUFFER_SIZE);
 	if (r == 0)
 		return (NULL);
 	buffer[r] = '\0';
-	next_line = ft_strdup(buffer);
+	if (r < BUFFER_SIZE)
+		next_line = ft_strdup("");
+	else
+		next_line = ft_strdup(buffer);
+			printf("r = %s\n", next_line);
 	while (1)
 	{
 		j = 0;
@@ -47,11 +50,11 @@ char	*get_next_line(int fd)
 			j++;
 		if (j < BUFFER_SIZE)
 		{
+			i = 0;
 			while (buffer[i] && buffer[i] != '\n')
 				i++;
-		printf("i = %d\n", i);
 			cln = ft_substr(buffer, 0, i);
-			clnbis = ft_strdup(next_line);
+			clnbis = ft_substr(next_line, 0, i);
 			free(next_line);
 			next_line = ft_strjoin(clnbis, cln);
 			free(cln);
@@ -83,3 +86,4 @@ int	main(int argc, char **argv)
 		printf("Resultat : %s\n", test);
 	}
 }
+
