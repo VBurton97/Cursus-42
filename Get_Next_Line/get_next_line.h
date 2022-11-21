@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 17:25:50 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/18 18:12:43 by vburton          ###   ########.fr       */
+/*   Created: 2022/11/21 14:26:04 by vburton           #+#    #+#             */
+/*   Updated: 2022/11/21 19:35:55 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,14 @@
 # define GET_NEXT_LINE_H
 
 # include <stdlib.h>
-
-# define BUFF_SIZE 10
-
-typedef struct s_list
-{
-	char			*content;
-	struct s_list	*next;
-}		t_list;
-
-void	ft_lstadd_back(t_list **lst, t_list *new);
-
+# include <unistd.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
 # endif
+
+char	*ft_strdup(const char *s1);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*get_next_line(int fd);
+
+#endif
