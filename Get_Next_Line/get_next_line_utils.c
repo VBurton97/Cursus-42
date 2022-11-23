@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 16:04:24 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/21 21:17:29 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/23 17:19:38 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	j = 0;
 	if (!s1 || !s2)
 		return (NULL);
-	if ((size_tot = ft_strlen((char *)s1) + ft_strlen((char *)s2)) >= SIZE_MAX)
+	size_tot = ft_strlen((char *)s1) + ft_strlen((char *)s2);
+	if (size_tot >= SIZE_MAX)
 		return (NULL);
 	res = malloc(sizeof(char) * (size_tot + 1));
 	if (!res)
@@ -102,3 +103,18 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (sub);
 }
 
+char	*ft_calloc(size_t count, size_t size)
+{
+	char	*res;
+	size_t	i;
+
+	i = 0;
+	if (count > SIZE_MAX / size)
+		return (NULL);
+	res = malloc(size * count);
+	if (!res)
+		return (NULL);
+	while (i < size * count)
+		res[i++] = 0;
+	return (res);
+}
