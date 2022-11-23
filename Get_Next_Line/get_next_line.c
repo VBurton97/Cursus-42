@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:26:49 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/23 17:33:33 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/23 18:25:16 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,85 +17,98 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-int	check(char *tmp)
+char	*ft_next_keep(char *keep)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	*next;
 
-	if (!tmp)
-		return (0);
 	i = 0;
-	while (tmp[i])
+	j = 0;
+	if(!keep)
 	{
-		if (tmp[i] == '\n')
-			return (1);
+		free(keep);
+		return (NULL);
+	}
+	while (keep[i] != '\0')
+		i++;
+	next = ft_calloc((ft_strlen(keep) - i + 1), 1);
+	while(keep[i])
+		next[j++] = keep[i++];
+	free(keep);
+	return (next);
+}
+
+char	*ft_nl(char	*keep)
+{
+	size_t	i;
+	char	*res;
+
+	i = 0;
+	if (!keep)
+		return (NULL);
+	while (keep[i] != '\0' && keep[i])
+		i++;
+	res = ft_calloc(i + 2, 1);
+	i = 0;
+	while(keep[i])
+	{
+		res[i] = keep[i];
 		i++;
 	}
-	return (0);
+	return (res);
 }
 
-char	*ft_union(char *line, char *buffer)
+char	*ft_add_str(char	*keep, char	*buffer)
 {
-	char	*cln;
+	char	*tmp;
 
-	cln = ft_strdup(line);
-	free(line);
-	line = ft_strjoin(cln, buffer);
-	free(cln);
-	return (line);
+	tmp = ft_strjoin(keep, buffer);
+	if (!tmp)
+		free(buffer);
+	free(keep);
+	return (tmp);
 }
 
-char	*find_nl(int fd, char *tmp)
+char	*seek(int fd, char *keep)
 {
-	char	*buffer;
-	char	*line;
 	int		r;
-	int		i;
+	char	*buffer;
 
-	i = 0;
-	if (check(tmp))
-		return (tmp);
-	if (tmp == '\0')
-		line = ft_calloc(1, 1);
-	else
-		line = tmp;
+	r = 1;
+	if (!keep)
+		keep = ft_calloc(1,1);
 	buffer = ft_calloc(BUFFER_SIZE + 1, 1);
-	while (1)
+	while (r > 0)
 	{
 		r = read(fd, buffer, BUFFER_SIZE);
-		if (r == 0)
-			return (NULL);
-		line = ft_union(line, buffer);
-		while (line[i] != '\n' && line[i])
-			i++;
-		if (line[i] == '\n' || r < BUFFER_SIZE)
+		if (r == -1)
 		{
 			free(buffer);
-			return (line);
+			free(keep);
+			return (NULL);
 		}
+		keep = ft_add_str(keep, buffer);
+		if (ft_strchr(keep, '\n'))
+			break;
 	}
+	free(buffer);
+	return (keep);
 }
 
 char	*get_next_line(int fd)
 {
-	static int	i;
-	static char	*tmp;
 	char		*next_line;
+	static char	*keep;
 
-	if (fd <= 0)
+	keep = seek(fd, keep);
+	if (!keep)
 		return (NULL);
-	i = 0;
-	tmp = find_nl(fd, tmp);
-	if (!tmp)
-		return (NULL);
-	while (tmp[i] && tmp[i] != '\n')
-		i++;
-	next_line = ft_substr(tmp, 0, ++i);
-	tmp = ft_substr(tmp, i++, BUFFER_SIZE);
-	if (!tmp)
-		free(tmp);
-	return (next_line);
+	next_line = ft_nl(keep);
+	keep = ft_next_keep(keep);
+	return(next_line);
 }
-/*
+
 int	main(int argc, char **argv)
 {
 	int		fd;
@@ -119,4 +132,4 @@ int	main(int argc, char **argv)
 
 	}
 }
-*/
+

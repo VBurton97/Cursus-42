@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 16:04:24 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/23 17:19:38 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/23 18:06:16 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,20 @@ char	*ft_calloc(size_t count, size_t size)
 	while (i < size * count)
 		res[i++] = 0;
 	return (res);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+		i++;
+	}
+	if (c == 0)
+		return ((char *)&s[i]);
+	return (NULL);
 }
