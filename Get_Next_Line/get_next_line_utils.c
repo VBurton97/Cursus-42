@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 16:04:24 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/23 18:06:16 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/24 16:37:12 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,12 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	if (!s1 || !s2)
+	if (!s1 && !s2)
 		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
 	size_tot = ft_strlen((char *)s1) + ft_strlen((char *)s2);
 	if (size_tot >= SIZE_MAX)
 		return (NULL);
@@ -73,34 +77,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		res[i++] = s2[j++];
 	res[i] = '\0';
 	return (res);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	size_t	i;
-	char	*sub;
-
-	i = 0;
-	if (!s)
-		return (NULL);
-	if ((size_t)ft_strlen((char *)&s[start]) < len)
-		len = ft_strlen((char *)&s[start]);
-	if ((size_t)start > ft_strlen((char *)s))
-	{
-		sub = malloc(sizeof(char));
-		sub[0] = '\0';
-		return (sub);
-	}
-	sub = malloc(sizeof(char const) * (len + 1));
-	if (!sub)
-		return (NULL);
-	while (i < len)
-	{
-		sub[i] = s[start + i];
-		i++;
-	}
-	sub[len] = '\0';
-	return (sub);
 }
 
 char	*ft_calloc(size_t count, size_t size)
