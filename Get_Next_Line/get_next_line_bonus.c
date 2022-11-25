@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:26:49 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/25 18:04:14 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/25 18:09:23 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,25 +112,25 @@ char	*seek(int fd, char *keep)
 char	*get_next_line(int fd)
 {
 	char		*next_line;
-	static char	*keep;
+	static char	*keep[10240];
 
 	if (fd < 0 || read(fd, keep, 0) || BUFFER_SIZE <= 0)
 	{
 		free(keep);
-		keep = NULL;
+		keep[fd] = NULL;
 		return (NULL);
 	}
-	keep = seek(fd, keep);
+	keep[fd] = seek(fd, keep[fd]);
 	if (!keep)
 	{
-		free(keep);
-		keep = NULL;
+		free(keep[fd]);
+		keep[fd] = NULL;
 		return (NULL);
 	}
-	next_line = ft_nl(keep);
-	keep = ft_next_keep(keep);
+	next_line = ft_nl(keep[fd]);
+	keep[fd] = ft_next_keep(keep[fd]);
 	if (!next_line)
-		free(keep);
+		free(keep[fd]);
 	return (next_line);
 }
 
