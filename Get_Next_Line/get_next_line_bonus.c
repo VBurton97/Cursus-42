@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:26:49 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/29 11:54:20 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/29 13:17:53 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_next_keep(char *keep)
 	return (free(keep), keep = NULL, next);
 }
 
-char	*ft_nl(char	*keep)
+char	*ft_nl(char *keep)
 {
 	size_t	i;
 	char	*res;
@@ -43,14 +43,12 @@ char	*ft_nl(char	*keep)
 	if (!keep)
 		return (NULL);
 	while (keep[i] != '\n' && keep[i])
-	{
 		i++;
-		if (keep[i] == '\n')
-			i++;
-		res = ft_calloc(i + 1, 1);
-		if (!res)
-			return (NULL);
-	}
+	if (keep[i] == '\n')
+		i++;
+	res = ft_calloc(i + 1, 1);
+	if (!res)
+		return (NULL);
 	i = 0;
 	while (keep[i])
 	{
@@ -62,7 +60,7 @@ char	*ft_nl(char	*keep)
 	return (res);
 }
 
-char	*ft_add_str(char	*keep, char	*buffer, size_t r)
+char	*ft_add_str(char *keep, char *buffer, size_t r)
 {
 	size_t	i;
 	char	*tmp;

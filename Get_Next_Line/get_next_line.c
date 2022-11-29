@@ -6,11 +6,11 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:26:49 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/29 13:06:37 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/29 13:17:33 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_next_keep(char *keep)
 {
@@ -34,7 +34,7 @@ char	*ft_next_keep(char *keep)
 	return (free(keep), keep = NULL, next);
 }
 
-char	*ft_nl(char	*keep)
+char	*ft_nl(char *keep)
 {
 	size_t	i;
 	char	*res;
@@ -60,7 +60,7 @@ char	*ft_nl(char	*keep)
 	return (res);
 }
 
-char	*ft_add_str(char	*keep, char	*buffer, size_t r)
+char	*ft_add_str(char *keep, char *buffer, size_t r)
 {
 	size_t	i;
 	char	*tmp;
@@ -100,7 +100,7 @@ char	*get_next_line(int fd)
 	char		*next_line;
 	static char	*keep;
 
-	if (fd < 0 || read(fd, keep, 0) < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0)
 	{
 		if (keep)
 			free(keep);
