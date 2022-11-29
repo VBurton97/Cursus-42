@@ -6,16 +6,11 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:26:49 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/25 18:04:14 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/29 10:59:19 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <stdio.h>
 
 char	*ft_next_keep(char *keep)
 {
@@ -26,24 +21,17 @@ char	*ft_next_keep(char *keep)
 	i = 0;
 	j = 0;
 	if (!keep || keep[0] == '\0')
-	{
-		free(keep);
-		return (NULL);
-	}
+		return (free(keep), keep = NULL, NULL);
 	while (keep[i] != '\n' && keep[i])
 		i++;
 	next = ft_calloc((ft_strlen(keep) - i + 1), 1);
 	if (!next)
-	{
-		free(keep);
-		return (NULL);
-	}
+		return (free(keep), keep = NULL, NULL);
 	if (i != ft_strlen(keep))
 		i++;
 	while (keep[i])
 		next[j++] = keep[i++];
-	free(keep);
-	return (next);
+	return (free(keep), keep = NULL, next);
 }
 
 char	*ft_nl(char	*keep)
@@ -56,7 +44,9 @@ char	*ft_nl(char	*keep)
 		return (NULL);
 	while (keep[i] != '\n' && keep[i])
 		i++;
-	res = ft_calloc(i + 2, 1);
+	if (keep[i] == '\n')
+		i++;
+	res = ft_calloc(i + 1, 1);
 	if (!res)
 		return (NULL);
 	i = 0;
@@ -80,8 +70,7 @@ char	*ft_add_str(char	*keep, char	*buffer, size_t r)
 		i++;
 	buffer[i] = '\0';
 	tmp = ft_strjoin(keep, buffer);
-	free(keep);
-	return (tmp);
+	return (free(keep), keep = NULL, tmp);
 }
 
 char	*seek(int fd, char *keep)
@@ -102,10 +91,7 @@ char	*seek(int fd, char *keep)
 			break ;
 	}
 	if (r == 0 && keep[0] == '\0')
-	{
-		free(keep);
-		return (NULL);
-	}
+		return (free(keep), keep = NULL, NULL);
 	return (keep);
 }
 
@@ -114,43 +100,22 @@ char	*get_next_line(int fd)
 	char		*next_line;
 	static char	*keep;
 
-	if (fd < 0 || read(fd, keep, 0) || BUFFER_SIZE <= 0)
+	if (fd < 0 || read(fd, keep, 0) < 0 || BUFFER_SIZE <= 0)
 	{
-		free(keep);
+		if (keep)
+			free(keep);
 		keep = NULL;
 		return (NULL);
 	}
 	keep = seek(fd, keep);
 	if (!keep)
-	{
-		free(keep);
-		keep = NULL;
-		return (NULL);
-	}
+		return (free(keep), keep = NULL, NULL);
 	next_line = ft_nl(keep);
 	keep = ft_next_keep(keep);
 	if (!next_line)
+	{
 		free(keep);
+		keep = NULL;
+	}
 	return (next_line);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	int		fd;
-// 	char	*test;
-
-// 	if (argc > 1)
-// 	{
-// 		fd = open(argv[1], O_RDONLY);
-// 		test = get_next_line(fd);
-// 		while (test != NULL)
-// 		{
-// 			printf("%s", test);
-// 			free(test);
-// 			test = get_next_line(fd);
-// 		}
-// 		close(fd);
-// 		if(test)
-// 			free(test);
-// 	}
-// }
