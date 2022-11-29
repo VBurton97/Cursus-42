@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:26:49 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/29 13:17:33 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/29 17:55:49 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,12 @@ char	*ft_add_str(char *keep, char *buffer, size_t r)
 char	*seek(int fd, char *keep)
 {
 	size_t	r;
-	char	buffer[BUFFER_SIZE + 1];
+	char	*buffer;
 
 	r = 1;
+	buffer = ft_calloc(BUFFER_SIZE + 1, 1);
+	if (!buffer)
+		return (free(keep), keep = NULL, NULL);
 	while (r != 0)
 	{
 		r = read(fd, buffer, BUFFER_SIZE);
@@ -86,10 +89,11 @@ char	*seek(int fd, char *keep)
 			break ;
 		keep = ft_add_str(keep, buffer, r);
 		if (!keep)
-			return (NULL);
+			return (free(buffer), buffer = NULL, NULL);
 		if (ft_strchr(keep, '\n'))
 			break ;
 	}
+	free(buffer);
 	if (r == 0 && keep[0] == '\0')
 		return (free(keep), keep = NULL, NULL);
 	return (keep);

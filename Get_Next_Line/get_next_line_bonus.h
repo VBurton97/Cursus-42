@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:26:04 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/29 13:18:03 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/29 17:06:14 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,5 @@ char	*get_next_line(int fd);
 char	*ft_calloc(size_t count, size_t size);
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strlen(const char *str);
+
 #endif
