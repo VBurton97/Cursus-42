@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:26:49 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/28 15:53:56 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/29 11:54:20 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,17 @@ char	*ft_next_keep(char *keep)
 	i = 0;
 	j = 0;
 	if (!keep || keep[0] == '\0')
-	{
-		free(keep);
-		return (NULL);
-	}
+		return (free(keep), keep = NULL, NULL);
 	while (keep[i] != '\n' && keep[i])
 		i++;
 	next = ft_calloc((ft_strlen(keep) - i + 1), 1);
 	if (!next)
-	{
-		free(keep);
-		return (NULL);
-	}
+		return (free(keep), keep = NULL, NULL);
 	if (i != ft_strlen(keep))
 		i++;
 	while (keep[i])
 		next[j++] = keep[i++];
-	free(keep);
-	return (next);
+	return (free(keep), keep = NULL, next);
 }
 
 char	*ft_nl(char	*keep)
@@ -54,10 +47,10 @@ char	*ft_nl(char	*keep)
 		i++;
 		if (keep[i] == '\n')
 			i++;
+		res = ft_calloc(i + 1, 1);
+		if (!res)
+			return (NULL);
 	}
-	res = ft_calloc(i + 1, 1);
-	if (!res)
-		return (NULL);
 	i = 0;
 	while (keep[i])
 	{
@@ -79,8 +72,7 @@ char	*ft_add_str(char	*keep, char	*buffer, size_t r)
 		i++;
 	buffer[i] = '\0';
 	tmp = ft_strjoin(keep, buffer);
-	free(keep);
-	return (tmp);
+	return (free(keep), keep = NULL, tmp);
 }
 
 char	*seek(int fd, char *keep)
@@ -101,10 +93,7 @@ char	*seek(int fd, char *keep)
 			break ;
 	}
 	if (r == 0 && keep[0] == '\0')
-	{
-		free(keep);
-		return (NULL);
-	}
+		return (free(keep), keep = NULL, NULL);
 	return (keep);
 }
 
@@ -113,22 +102,22 @@ char	*get_next_line(int fd)
 	char		*next_line;
 	static char	*keep[OPEN_MAX];
 
-	if (fd < 0 || read(fd, keep[fd], 0) < 0 || BUFFER_SIZE <= 0)
+	if ((fd < 0 && fd < OPEN_MAX) || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0)
 	{
-		free(keep[fd]);
+		if (keep[fd])
+			free(keep[fd]);
 		keep[fd] = NULL;
 		return (NULL);
 	}
 	keep[fd] = seek(fd, keep[fd]);
 	if (!keep[fd])
-	{
-		free(keep[fd]);
-		keep[fd] = NULL;
-		return (NULL);
-	}
+		return (free(keep[fd]), keep[fd] = NULL, NULL);
 	next_line = ft_nl(keep[fd]);
 	keep[fd] = ft_next_keep(keep[fd]);
 	if (!next_line)
+	{
 		free(keep[fd]);
+		keep[fd] = NULL;
+	}
 	return (next_line);
 }
