@@ -6,16 +6,11 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:26:49 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/25 18:04:14 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/28 19:05:42 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <stdio.h>
 
 char	*ft_next_keep(char *keep)
 {
@@ -114,7 +109,7 @@ char	*get_next_line(int fd)
 	char		*next_line;
 	static char	*keep;
 
-	if (fd < 0 || read(fd, keep, 0) || BUFFER_SIZE <= 0)
+	if (fd < 0 || read(fd, keep, 0) < 0 || BUFFER_SIZE <= 0)
 	{
 		free(keep);
 		keep = NULL;
@@ -133,24 +128,3 @@ char	*get_next_line(int fd)
 		free(keep);
 	return (next_line);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	int		fd;
-// 	char	*test;
-
-// 	if (argc > 1)
-// 	{
-// 		fd = open(argv[1], O_RDONLY);
-// 		test = get_next_line(fd);
-// 		while (test != NULL)
-// 		{
-// 			printf("%s", test);
-// 			free(test);
-// 			test = get_next_line(fd);
-// 		}
-// 		close(fd);
-// 		if(test)
-// 			free(test);
-// 	}
-// }

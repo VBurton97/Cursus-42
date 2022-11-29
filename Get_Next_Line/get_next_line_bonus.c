@@ -6,16 +6,11 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:26:49 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/25 18:09:23 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/28 15:53:56 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <stdio.h>
+#include "get_next_line_bonus.h"
 
 char	*ft_next_keep(char *keep)
 {
@@ -55,8 +50,12 @@ char	*ft_nl(char	*keep)
 	if (!keep)
 		return (NULL);
 	while (keep[i] != '\n' && keep[i])
+	{
 		i++;
-	res = ft_calloc(i + 2, 1);
+		if (keep[i] == '\n')
+			i++;
+	}
+	res = ft_calloc(i + 1, 1);
 	if (!res)
 		return (NULL);
 	i = 0;
@@ -112,16 +111,16 @@ char	*seek(int fd, char *keep)
 char	*get_next_line(int fd)
 {
 	char		*next_line;
-	static char	*keep[10240];
+	static char	*keep[OPEN_MAX];
 
-	if (fd < 0 || read(fd, keep, 0) || BUFFER_SIZE <= 0)
+	if (fd < 0 || read(fd, keep[fd], 0) < 0 || BUFFER_SIZE <= 0)
 	{
-		free(keep);
+		free(keep[fd]);
 		keep[fd] = NULL;
 		return (NULL);
 	}
 	keep[fd] = seek(fd, keep[fd]);
-	if (!keep)
+	if (!keep[fd])
 	{
 		free(keep[fd]);
 		keep[fd] = NULL;
@@ -133,24 +132,3 @@ char	*get_next_line(int fd)
 		free(keep[fd]);
 	return (next_line);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	int		fd;
-// 	char	*test;
-
-// 	if (argc > 1)
-// 	{
-// 		fd = open(argv[1], O_RDONLY);
-// 		test = get_next_line(fd);
-// 		while (test != NULL)
-// 		{
-// 			printf("%s", test);
-// 			free(test);
-// 			test = get_next_line(fd);
-// 		}
-// 		close(fd);
-// 		if(test)
-// 			free(test);
-// 	}
-// }
