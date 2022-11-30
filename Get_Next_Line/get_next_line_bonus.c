@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:26:49 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/29 17:57:19 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/30 12:07:40 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*seek(int fd, char *keep)
 			break ;
 		keep = ft_add_str(keep, buffer, r);
 		if (!keep)
-			return (NULL);
+			return (free(buffer), buffer = NULL, NULL);
 		if (ft_strchr(keep, '\n'))
 			break ;
 	}
