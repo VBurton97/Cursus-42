@@ -1,27 +1,36 @@
 #Architecture system et version du Kernel
-SYSTEM=$(uname -ri)
+SYSTEM=$(uname -a)
 #Nombre de processeurs
 PROC=$(lscpu | grep Soket | awk '{print $2}')
 VPROC=$(lscpu| grep Thread | awk '{print $4}')
-MEMVFREE=$(free -m | grep Mem | awk '{print $4}')
-MEMVTOT=$(free -m | grep Mem | awk '{print $4}')
+#Memoire vive
+MEMVFREE=$(free -m | grep Mem | awk '{print $3}')
+MEMVTOT=$(free -m | grep Mem | awk '{print $2}')
 MEMVR=$(free -m | grep Mem | awk '{used=$3} {tot=$2} {print"%.2f", used / tot * 100}')
-MEMFREE=$(DF -Bm | sed '1d' | awk '{value +=$4} END {print"%d", value}')
-MEMTOT=$(DF -Bm | sed '1d' | awk '{value +=$2} END {print"%d", value}')
-MEMR=$(DF -Bm | sed '1d' | awk '{value += $4} {tot += $2} END {print"%d", value / tot * 100}')
+#Memoire
+MEMFREE=$(DF -Bm | sed '1d' | awk '{value +=$3} END {print"%.2d", value}')
+MEMTOT=$(DF -Bm | sed '1d' | awk '{value +=$2} END {print"%.2d", value}')
+MEMR=$(DF -Bm | sed '1d' | awk '{value += $3} {tot += $2} END {print"%.2d", value / tot * 100}')
+#Utilisation du processeur
 UPROC=$(top -n1 | sed -n 3p | awk '{print $2}')
+#Last boot
 LASTLOGDATE=$(who -b | awk '{print $3}')
 LASTLOGHOUR=$(who -b | awk '{print $4}')
+#Partition LVM
 LVM=$(lsblk | grep lvm | wc -l | awk '{if ($1 > 0) print"yes"; else print"no"}')
+#Connexion TCP
 COACTIVE=$(ss -ltnu | grep tcp | wc -l)
+#Nombre de user connecte
 NBUSERS=$(users | -wc -w)
+#Adresse IP et MAC
 IP=$(ip a | grep inet | grep global | awk '{print $2}' | awk -F "/" '{print $1}')
 IPMAC=$(ip a | grep ether | awk '{print $2}')
+#Nombre de commande sudo execute
 NBCOMMAND=$(jounalctl | grep COMMAND | wc -l)
 
 
 
-echo "
+wall "
 ################## Architecture ##################
 
 Architecture : ${SYSTEM}

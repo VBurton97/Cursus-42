@@ -5,7 +5,7 @@ INC		:=	ft_printf.h
 
 DIR_OBJS := OBJS/
 
-SRC 	:= ft_printf.c \
+SRC 	:= 	ft_printf.c \
 			ft_putchar.c \
 			ft_putnbr.c \
 			ft_putnbr_base.c \

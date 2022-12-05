@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:35:14 by victor            #+#    #+#             */
-/*   Updated: 2022/11/21 18:47:19 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/05 11:30:36 by vburton          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,3 @@ int	ft_printf(const char *str, ...)
 	va_end(lst);
 	return (ibis);
 }
-
