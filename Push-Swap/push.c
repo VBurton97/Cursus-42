@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:39:13 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/08 14:24:21 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/08 18:37:26 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_up(t_tab *tab)
 		i++;
 	}
 	tab->pos_last_num -= 1;
-	tab->tab[tab->pos_last_num] = 0;
 }
 
 void	ft_down(t_tab *tab)

@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:44:00 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/08 14:48:03 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/08 19:01:17 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,12 @@ int	ft_seek_smalest(t_tab *tab)
 	smallest = 0;
 	while (i < tab->pos_last_num)
 	{
+		printf("tab->tab[i] = %d et tab->tab[smallest]= %d\n", tab->tab[i], tab->tab[smallest]);
 		if (tab->tab[i] < tab->tab[smallest])
+		{
+			printf("i = %d\n", i);
 			smallest = i;
+		}
 		i++;
 	}
 	return (smallest);
@@ -132,18 +136,18 @@ void	ft_all(t_tab *tab_a, t_tab *tab_b)
 	while (i < tab_a->size)
 	{
 		s = ft_seek_smalest(tab_a);
+		printf("s = %d\n", s);
 		while (s-- > 0)
 			ft_rotate(tab_a);
 		ft_push_b(tab_a, tab_b);
 		i++;
 	}
-	// ft_display(tab_a, tab_b);
+	//ft_display(tab_a, tab_b);
 	while (i > 0)
 	{
 		ft_push_a(tab_a, tab_b);
 		i--;
 	}
-
 }
 
 int	main(int argc, char **argv)
