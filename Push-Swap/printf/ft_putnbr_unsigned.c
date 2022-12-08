@@ -1,37 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverse_rotate.c                                   :+:      :+:    :+:   */
+/*   ft_putnbr_unsigned.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/07 15:29:25 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/08 14:24:26 by vburton          ###   ########.fr       */
+/*   Created: 2022/11/08 18:31:30 by vburton           #+#    #+#             */
+/*   Updated: 2022/11/18 15:38:43 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "ft_printf.h"
 
-void ft_reverse_rotate(t_tab *tab)
+int	ft_putnbr_unsigned(int n, int len)
 {
-	int	i;
-	int cln;
-	int	start;
+	unsigned long int	nbis;
 
-	i = tab->pos_last_num - 1;
-	while (i > 0)
+	nbis = (unsigned)n;
+	if (nbis < 10)
 	{
-		cln = tab->tab[i - 1];
-		tab->tab[i - 1] = tab->tab[i];
-		tab->tab[i] = cln;
-		i--;
+		nbis = nbis + 48;
+		ft_putchar(nbis);
 	}
-	ft_printf("rr%c\n", tab->colonne);
-}
-
-void ft_reverse_rotate_rrr(t_tab *tab_a, t_tab *tab_b)
-{
-	ft_rotate(tab_a);
-	ft_rotate(tab_b);
-	ft_printf("rrr\n");
+	else
+	{
+		len = ft_putnbr(nbis / 10, len);
+		ft_putnbr(nbis % 10, len);
+	}
+	return (++len);
 }

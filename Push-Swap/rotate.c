@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:11:15 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/07 15:28:26 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/08 14:24:29 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ void ft_rotate(t_tab *tab)
 		tab->tab[i] = cln;
 		i++;
 	}
+	ft_printf("r%c\n", tab->colonne);
 }
 
 void ft_rotate_rr(t_tab *tab_a, t_tab *tab_b)
 {
 	ft_rotate(tab_a);
 	ft_rotate(tab_b);
+	ft_printf("rr\n");
 }

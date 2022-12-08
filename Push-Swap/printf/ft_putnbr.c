@@ -1,37 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverse_rotate.c                                   :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/07 15:29:25 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/08 14:24:26 by vburton          ###   ########.fr       */
+/*   Created: 2022/11/08 18:31:30 by vburton           #+#    #+#             */
+/*   Updated: 2022/11/17 19:13:30 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "ft_printf.h"
 
-void ft_reverse_rotate(t_tab *tab)
+int	ft_putnbr(int n, int len)
 {
-	int	i;
-	int cln;
-	int	start;
-
-	i = tab->pos_last_num - 1;
-	while (i > 0)
+	if (n == INT_MIN)
 	{
-		cln = tab->tab[i - 1];
-		tab->tab[i - 1] = tab->tab[i];
-		tab->tab[i] = cln;
-		i--;
+		ft_putstr("-2147483648");
+		len += 11;
 	}
-	ft_printf("rr%c\n", tab->colonne);
-}
-
-void ft_reverse_rotate_rrr(t_tab *tab_a, t_tab *tab_b)
-{
-	ft_rotate(tab_a);
-	ft_rotate(tab_b);
-	ft_printf("rrr\n");
+	if (n > INT_MIN && n <= INT_MAX)
+	{
+		if (n < 10 && n >= 0)
+		{
+			n = n + 48;
+			ft_putchar(n);
+		}
+		else if (n < 0)
+		{
+			ft_putchar('-');
+			len = ft_putnbr(n * -1, len);
+		}
+		else
+		{
+			len = ft_putnbr(n / 10, len);
+			ft_putnbr(n % 10, len);
+		}
+		len++;
+	}
+	return (len);
 }

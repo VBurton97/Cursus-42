@@ -1,37 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverse_rotate.c                                   :+:      :+:    :+:   */
+/*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/07 15:29:25 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/08 14:24:26 by vburton          ###   ########.fr       */
+/*   Created: 2022/11/08 18:08:13 by vburton           #+#    #+#             */
+/*   Updated: 2022/11/17 17:30:58 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "ft_printf.h"
 
-void ft_reverse_rotate(t_tab *tab)
+int	ft_putchar(char c)
 {
-	int	i;
-	int cln;
-	int	start;
-
-	i = tab->pos_last_num - 1;
-	while (i > 0)
-	{
-		cln = tab->tab[i - 1];
-		tab->tab[i - 1] = tab->tab[i];
-		tab->tab[i] = cln;
-		i--;
-	}
-	ft_printf("rr%c\n", tab->colonne);
-}
-
-void ft_reverse_rotate_rrr(t_tab *tab_a, t_tab *tab_b)
-{
-	ft_rotate(tab_a);
-	ft_rotate(tab_b);
-	ft_printf("rrr\n");
+	write(1, &c, 1);
+	return (1);
 }

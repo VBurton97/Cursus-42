@@ -1,37 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverse_rotate.c                                   :+:      :+:    :+:   */
+/*   ft_putnbr_adresse_hexa.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/07 15:29:25 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/08 14:24:26 by vburton          ###   ########.fr       */
+/*   Created: 2022/11/17 17:47:04 by vburton           #+#    #+#             */
+/*   Updated: 2022/11/30 16:04:51 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "ft_printf.h"
 
-void ft_reverse_rotate(t_tab *tab)
+int	ft_write_hexa(unsigned long long nbr, char *base, int len)
 {
-	int	i;
-	int cln;
-	int	start;
-
-	i = tab->pos_last_num - 1;
-	while (i > 0)
+	if (nbr < 16)
+		write(1, &base[nbr], 1);
+	else
 	{
-		cln = tab->tab[i - 1];
-		tab->tab[i - 1] = tab->tab[i];
-		tab->tab[i] = cln;
-		i--;
+		len = ft_write_hexa(nbr / 16, base, len);
+		ft_write_hexa(nbr % 16, base, len);
 	}
-	ft_printf("rr%c\n", tab->colonne);
+	len++;
+	return (len);
 }
 
-void ft_reverse_rotate_rrr(t_tab *tab_a, t_tab *tab_b)
+int	ft_putnbr_base_hexa(unsigned long long nbr, int len)
 {
-	ft_rotate(tab_a);
-	ft_rotate(tab_b);
-	ft_printf("rrr\n");
+	write(1, "0x", 2);
+	len += 2;
+	len = ft_write_hexa(nbr, EXA_DOWN, len);
+	return (len);
 }
