@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:37:06 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/08 14:20:06 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/12 15:01:42 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_tab
 	char	colonne;
 	int		size;
 	int		pos_last_num;
-	int		*tab;
+	long long		*tab;
 
 }				t_tab;
 

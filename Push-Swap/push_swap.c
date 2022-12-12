@@ -6,32 +6,41 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:44:00 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/08 19:01:17 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/12 16:06:04 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_init_tab(t_tab *tab_a, t_tab *tab_b, int size, char **argv)
+void	ft_init_tab(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp, int size, char **argv)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	tab_a->colonne = 'a';
 	tab_b->colonne = 'b';
 	tab_a->size = size;
 	tab_a->pos_last_num = size - 1;
 	tab_b->size = size;
 	tab_b->pos_last_num = 0;
+	tabtmp->size = size;
+	tabtmp->pos_last_num = size - 1;
 	while (i < size)
 	{
 		tab_a->tab[i - 1] = ft_atoi(argv[i]);
+		tabtmp->tab[i - 1] = ft_atoi(argv[i]);
 		i++;
 	}
-	i = 0;
+	i = 1;
 	while (i < size)
 	{
 		tab_b->tab[i - 1] = 0;
+		i++;
+	}
+	i = 0;
+	while (i < size - 5)
+	{
+		ft_printf("%s / ", tab_a->tab[i]);
 		i++;
 	}
 }
@@ -43,10 +52,10 @@ void	ft_display(t_tab *tab_a, t_tab *tab_b)
 	i = 0;
 	while (i < tab_a->size - 1)
 	{
-		printf("%d    %d\n", tab_a->tab[i], tab_b->tab[i]);
+	//	ft_printf("%d    %d\n", tab_a->tab[i], tab_b->tab[i]);
 		i++;
 	}
-	printf("------\nA    B\n");
+	//ft_printf("------\nA    B\n");
 }
 
 void	ft_three(t_tab *tab)
@@ -87,12 +96,8 @@ int	ft_seek_smalest(t_tab *tab)
 	smallest = 0;
 	while (i < tab->pos_last_num)
 	{
-		printf("tab->tab[i] = %d et tab->tab[smallest]= %d\n", tab->tab[i], tab->tab[smallest]);
 		if (tab->tab[i] < tab->tab[smallest])
-		{
-			printf("i = %d\n", i);
 			smallest = i;
-		}
 		i++;
 	}
 	return (smallest);
@@ -127,27 +132,57 @@ void	ft_five(t_tab *tab_a, t_tab *tab_b)
 	ft_push_a(tab_a, tab_b);
 }
 
-void	ft_all(t_tab *tab_a, t_tab *tab_b)
+void	ft_first_sort(t_tab *tabtmp, long *tab)
+{
+	int		i;
+	int		s;
+
+	i = 0;
+	while (i < tabtmp->size - 1)
+	{
+		s = ft_seek_smalest(tabtmp);
+		tab[i] = tabtmp->tab[s];
+		tabtmp->tab[s] = 2147483649;
+		i++;
+	}
+}
+
+void	ft_sort_all(t_tab *tab_a, t_tab *tab_b, int	m)
 {
 	int	i;
 	int	s;
 
+	s = tab_a->size / 2;
 	i = 0;
-	while (i < tab_a->size)
+	while (i < s)
 	{
-		s = ft_seek_smalest(tab_a);
-		printf("s = %d\n", s);
-		while (s-- > 0)
+		if (tab_a->tab[i] < m)
+		{
+			ft_push_b(tab_a, tab_b);
+			i++;
+		}
+		else if (tab_a->tab[tab_a->pos_last_num] < m)
+		{
+			ft_reverse_rotate(tab_a);
+			ft_push_b(tab_a, tab_b);
+			i++;
+		}
+		else
 			ft_rotate(tab_a);
-		ft_push_b(tab_a, tab_b);
-		i++;
 	}
-	//ft_display(tab_a, tab_b);
-	while (i > 0)
-	{
-		ft_push_a(tab_a, tab_b);
-		i--;
-	}
+	ft_display(tab_a, tab_b);
+}
+
+void	ft_all(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp)
+{
+	int	m;
+	long	*tab_sort;
+
+	tab_sort = malloc(sizeof(long) * tab_a->size);
+	if (!tab_sort)
+		return ;
+	ft_first_sort(tabtmp, tab_sort);
+	m = tab_sort[tab_a->size / 2];
 }
 
 int	main(int argc, char **argv)
@@ -155,6 +190,7 @@ int	main(int argc, char **argv)
 	int		i;
 	t_tab	tab_a;
 	t_tab	tab_b;
+	t_tab	tabtmp;
 
 	i = 1;
 	tab_a.tab = malloc(sizeof(int) * (argc - 1));
@@ -163,7 +199,7 @@ int	main(int argc, char **argv)
 	tab_b.tab = malloc(sizeof(int *) * (argc - 1));
 	if (!tab_b.tab)
 		return (free(tab_a.tab), tab_a.tab = 0, 0);
-	ft_init_tab(&tab_a, &tab_b, argc, argv);
-	ft_all(&tab_a, &tab_b);
-	ft_display(&tab_a, &tab_b);
+	ft_init_tab(&tab_a, &tab_b, &tabtmp, argc, argv);
+	ft_all(&tab_a, &tab_b, &tabtmp);
+	return (0);
 }
