@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:44:00 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/12 19:25:17 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/12 19:28:17 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,11 +150,9 @@ void	ft_sort_all(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
 	while (tab_a->pos_last_num > 1)
 	{
 		s = (tab_a->pos_last_num + 1)/ 2;
-		printf("s = %d\n", s);
 		m = tab_sort[tab_a->size - s];
 		if (m == tab_sort[tab_a->size - 1])
 			m--;
-		printf("m = %d\n", m);
 		while (0 < s)
 		{
 			if (tab_a->tab[0] < m)
@@ -205,9 +203,9 @@ int	main(int argc, char **argv)
 	if (!tab_b.tab)
 		return (free(tab_a.tab), free(tab_b.tab), 0);
 	ft_init_tab(&tab_a, &tab_b, &tabtmp, argc - 1, argv);
-	ft_display(&tab_a, &tab_b);
+	//ft_display(&tab_a, &tab_b);
 	ft_all(&tab_a, &tab_b, &tabtmp);
 	//ft_reverse_rotate(&tab_a);
-	ft_display(&tab_a, &tab_b);
+	//ft_display(&tab_a, &tab_b);
 	return (0);
 }
