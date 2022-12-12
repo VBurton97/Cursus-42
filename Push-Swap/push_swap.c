@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:44:00 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/12 16:06:04 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/12 19:25:17 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,16 @@ void	ft_init_tab(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp, int size, char **arg
 	tab_b->pos_last_num = 0;
 	tabtmp->size = size;
 	tabtmp->pos_last_num = size - 1;
-	while (i < size)
+	while (i <= size)
 	{
 		tab_a->tab[i - 1] = ft_atoi(argv[i]);
 		tabtmp->tab[i - 1] = ft_atoi(argv[i]);
 		i++;
 	}
 	i = 1;
-	while (i < size)
+	while (i <= size)
 	{
 		tab_b->tab[i - 1] = 0;
-		i++;
-	}
-	i = 0;
-	while (i < size - 5)
-	{
-		ft_printf("%s / ", tab_a->tab[i]);
 		i++;
 	}
 }
@@ -50,12 +44,12 @@ void	ft_display(t_tab *tab_a, t_tab *tab_b)
 	int	i;
 
 	i = 0;
-	while (i < tab_a->size - 1)
+	while (i < tab_a->size)
 	{
-	//	ft_printf("%d    %d\n", tab_a->tab[i], tab_b->tab[i]);
+		ft_printf("%d    %d\n", tab_a->tab[i], tab_b->tab[i]);
 		i++;
 	}
-	//ft_printf("------\nA    B\n");
+	ft_printf("------\nA    B\n");
 }
 
 void	ft_three(t_tab *tab)
@@ -94,7 +88,7 @@ int	ft_seek_smalest(t_tab *tab)
 
 	i = 0;
 	smallest = 0;
-	while (i < tab->pos_last_num)
+	while (i <= tab->pos_last_num)
 	{
 		if (tab->tab[i] < tab->tab[smallest])
 			smallest = i;
@@ -138,7 +132,7 @@ void	ft_first_sort(t_tab *tabtmp, long *tab)
 	int		s;
 
 	i = 0;
-	while (i < tabtmp->size - 1)
+	while (i <= tabtmp->pos_last_num)
 	{
 		s = ft_seek_smalest(tabtmp);
 		tab[i] = tabtmp->tab[s];
@@ -147,30 +141,37 @@ void	ft_first_sort(t_tab *tabtmp, long *tab)
 	}
 }
 
-void	ft_sort_all(t_tab *tab_a, t_tab *tab_b, int	m)
+void	ft_sort_all(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
 {
 	int	i;
 	int	s;
+	int	m;
 
-	s = tab_a->size / 2;
-	i = 0;
-	while (i < s)
+	while (tab_a->pos_last_num > 1)
 	{
-		if (tab_a->tab[i] < m)
+		s = (tab_a->pos_last_num + 1)/ 2;
+		printf("s = %d\n", s);
+		m = tab_sort[tab_a->size - s];
+		if (m == tab_sort[tab_a->size - 1])
+			m--;
+		printf("m = %d\n", m);
+		while (0 < s)
 		{
-			ft_push_b(tab_a, tab_b);
-			i++;
+			if (tab_a->tab[0] < m)
+			{
+				ft_push_b(tab_a, tab_b);
+				s--;
+			}
+			else if (tab_a->tab[tab_a->pos_last_num] < m)
+			{
+				ft_reverse_rotate(tab_a);
+				ft_push_b(tab_a, tab_b);
+				s--;
+			}
+			else
+				ft_rotate(tab_a);
 		}
-		else if (tab_a->tab[tab_a->pos_last_num] < m)
-		{
-			ft_reverse_rotate(tab_a);
-			ft_push_b(tab_a, tab_b);
-			i++;
-		}
-		else
-			ft_rotate(tab_a);
 	}
-	ft_display(tab_a, tab_b);
 }
 
 void	ft_all(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp)
@@ -182,7 +183,8 @@ void	ft_all(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp)
 	if (!tab_sort)
 		return ;
 	ft_first_sort(tabtmp, tab_sort);
-	m = tab_sort[tab_a->size / 2];
+	int i = 0;
+	ft_sort_all(tab_a, tab_b, tab_sort);
 }
 
 int	main(int argc, char **argv)
@@ -193,13 +195,19 @@ int	main(int argc, char **argv)
 	t_tab	tabtmp;
 
 	i = 1;
-	tab_a.tab = malloc(sizeof(int) * (argc - 1));
+	tab_a.tab = malloc(sizeof(long) * (argc - 1));
 	if (!tab_a.tab)
 		return (0);
-	tab_b.tab = malloc(sizeof(int *) * (argc - 1));
+	tab_b.tab = malloc(sizeof(long) * (argc - 1));
 	if (!tab_b.tab)
 		return (free(tab_a.tab), tab_a.tab = 0, 0);
-	ft_init_tab(&tab_a, &tab_b, &tabtmp, argc, argv);
+	tabtmp.tab = malloc(sizeof(long) * (argc - 1));
+	if (!tab_b.tab)
+		return (free(tab_a.tab), free(tab_b.tab), 0);
+	ft_init_tab(&tab_a, &tab_b, &tabtmp, argc - 1, argv);
+	ft_display(&tab_a, &tab_b);
 	ft_all(&tab_a, &tab_b, &tabtmp);
+	//ft_reverse_rotate(&tab_a);
+	ft_display(&tab_a, &tab_b);
 	return (0);
 }

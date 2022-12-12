@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:39:13 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/08 18:37:26 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/12 17:15:55 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ void	ft_up(t_tab *tab)
 	int	cln;
 
 	i = 0;
-	while (i < tab->pos_last_num)
+	while (i <= tab->pos_last_num)
 	{
 		tab->tab[i] = tab->tab[i+1];
 		i++;
 	}
+	tab->tab[tab->pos_last_num] = 0;
 	tab->pos_last_num -= 1;
 }
 
@@ -51,6 +52,7 @@ void	ft_push_a(t_tab *tab_a, t_tab *tab_b)
 	tab_a->tab[0] = tab_b->tab[0];
 	tab_b->tab[0] = tmp;
 	ft_up(tab_b);
+	tab_b->tab[tab_b->pos_last_num] = 0;
 	ft_printf("pa\n");
 }
 
