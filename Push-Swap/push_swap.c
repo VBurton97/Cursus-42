@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:44:00 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/12 19:28:17 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/13 13:52:36 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_init_tab(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp, int size, char **arg
 	tab_a->size = size;
 	tab_a->pos_last_num = size - 1;
 	tab_b->size = size;
-	tab_b->pos_last_num = 0;
+	tab_b->pos_last_num = -1;
 	tabtmp->size = size;
 	tabtmp->pos_last_num = size - 1;
 	while (i <= size)
@@ -126,7 +126,7 @@ void	ft_five(t_tab *tab_a, t_tab *tab_b)
 	ft_push_a(tab_a, tab_b);
 }
 
-void	ft_first_sort(t_tab *tabtmp, long *tab)
+void	ft_sort_tab(t_tab *tabtmp, long *tab)
 {
 	int		i;
 	int		s;
@@ -140,8 +140,54 @@ void	ft_first_sort(t_tab *tabtmp, long *tab)
 		i++;
 	}
 }
+void	ft_second_sort(t_tab *tab_a, t_tab *tab_b)
+{
+	int	a;
+	int	i;
+	int	j;
+	int	y;
+	int	pos;
 
-void	ft_sort_all(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
+	if (tab_a->tab[0] > tab_a->tab[1])
+		ft_swap(tab_a);
+	while (tab_b->pos_last_num >= 0)
+	{
+		i = 0;
+		j = tab_b->pos_last_num + 1;
+		y = 0;
+		//ft_printf("******** j = %d *********\n", j);
+		pos = 0;
+		while (y <= j)
+		{
+			if (tab_b->tab[y] > tab_b->tab[pos])
+				pos = y;
+			y++;;
+		}
+		//ft_printf("******** pos = %d *********\n", pos);
+		//ft_display(tab_a, tab_b);
+		a = tab_b->pos_last_num - pos + 1;
+		if (pos > (tab_b->pos_last_num / 2))
+		{
+			while (i < a)
+			{
+				ft_reverse_rotate(tab_b);
+				i++;
+			}
+		}
+		else
+		{
+			while (pos > 0)
+			{
+				ft_rotate(tab_b);
+				pos--;
+			}
+		}
+		ft_push_a(tab_a, tab_b);
+		a--;
+	}
+}
+
+void	ft_first_sort(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
 {
 	int	i;
 	int	s;
@@ -180,9 +226,10 @@ void	ft_all(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp)
 	tab_sort = malloc(sizeof(long) * tab_a->size);
 	if (!tab_sort)
 		return ;
-	ft_first_sort(tabtmp, tab_sort);
+	ft_sort_tab(tabtmp, tab_sort);
 	int i = 0;
-	ft_sort_all(tab_a, tab_b, tab_sort);
+	ft_first_sort(tab_a, tab_b, tab_sort);
+	ft_second_sort(tab_a, tab_b);
 }
 
 int	main(int argc, char **argv)
@@ -205,7 +252,12 @@ int	main(int argc, char **argv)
 	ft_init_tab(&tab_a, &tab_b, &tabtmp, argc - 1, argv);
 	//ft_display(&tab_a, &tab_b);
 	ft_all(&tab_a, &tab_b, &tabtmp);
+	// ft_push_b(&tab_a, &tab_b);
+	// ft_push_b(&tab_a, &tab_b);
+	// ft_push_b(&tab_a, &tab_b);
+	// ft_reverse_rotate(&tab_b);
 	//ft_reverse_rotate(&tab_a);
+	//printf("poslatnum = %d\n", tab_b.pos_last_num);
 	//ft_display(&tab_a, &tab_b);
 	return (0);
 }
