@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:29:25 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/12 19:22:12 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/14 17:18:21 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void ft_reverse_rotate(t_tab *tab)
 {
 	int	i;
 	int cln;
-	int	start;
 
 	i = tab->pos_last_num;
 	while (i > 0)

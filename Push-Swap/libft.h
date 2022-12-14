@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 19:22:06 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/07 11:58:26 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/13 14:55:30 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <limits.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include "../push_swap.h"
+# include "push_swap.h"
 
 typedef struct s_list
 {

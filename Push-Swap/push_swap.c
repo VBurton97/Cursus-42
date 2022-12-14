@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:44:00 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/13 13:52:36 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/14 17:57:43 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,11 +143,13 @@ void	ft_sort_tab(t_tab *tabtmp, long *tab)
 void	ft_second_sort(t_tab *tab_a, t_tab *tab_b)
 {
 	int	a;
+	int	b;
 	int	i;
 	int	j;
 	int	y;
 	int	pos;
 
+	b = tab_b->pos_last_num / 2;
 	if (tab_a->tab[0] > tab_a->tab[1])
 		ft_swap(tab_a);
 	while (tab_b->pos_last_num >= 0)
@@ -155,7 +157,6 @@ void	ft_second_sort(t_tab *tab_a, t_tab *tab_b)
 		i = 0;
 		j = tab_b->pos_last_num + 1;
 		y = 0;
-		//ft_printf("******** j = %d *********\n", j);
 		pos = 0;
 		while (y <= j)
 		{
@@ -163,8 +164,6 @@ void	ft_second_sort(t_tab *tab_a, t_tab *tab_b)
 				pos = y;
 			y++;;
 		}
-		//ft_printf("******** pos = %d *********\n", pos);
-		//ft_display(tab_a, tab_b);
 		a = tab_b->pos_last_num - pos + 1;
 		if (pos > (tab_b->pos_last_num / 2))
 		{
@@ -183,30 +182,32 @@ void	ft_second_sort(t_tab *tab_a, t_tab *tab_b)
 			}
 		}
 		ft_push_a(tab_a, tab_b);
-		a--;
 	}
 }
 
 void	ft_first_sort(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
 {
-	int	i;
+	int	j;
 	int	s;
-	int	m;
+	int	median;
+	int	mid;
 
+	mid = tab_a->pos_last_num / 2;
 	while (tab_a->pos_last_num > 1)
 	{
 		s = (tab_a->pos_last_num + 1)/ 2;
-		m = tab_sort[tab_a->size - s];
-		if (m == tab_sort[tab_a->size - 1])
-			m--;
+		median = tab_sort[tab_a->size - s];
+		if (median == tab_sort[tab_a->size - 1])
+			median--;
 		while (0 < s)
 		{
-			if (tab_a->tab[0] < m)
+			j = 0;
+			if (tab_a->tab[0] < median)
 			{
 				ft_push_b(tab_a, tab_b);
 				s--;
 			}
-			else if (tab_a->tab[tab_a->pos_last_num] < m)
+			else if (tab_a->tab[tab_a->pos_last_num] < median)
 			{
 				ft_reverse_rotate(tab_a);
 				ft_push_b(tab_a, tab_b);
@@ -220,26 +221,22 @@ void	ft_first_sort(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
 
 void	ft_all(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp)
 {
-	int	m;
 	long	*tab_sort;
 
 	tab_sort = malloc(sizeof(long) * tab_a->size);
 	if (!tab_sort)
 		return ;
 	ft_sort_tab(tabtmp, tab_sort);
-	int i = 0;
-	ft_first_sort(tab_a, tab_b, tab_sort);
-	ft_second_sort(tab_a, tab_b);
+	ft_first_sort_bis(tab_a, tab_b, tab_sort);
+	ft_second_sort_bis(tab_a, tab_b);
 }
 
 int	main(int argc, char **argv)
 {
-	int		i;
 	t_tab	tab_a;
 	t_tab	tab_b;
 	t_tab	tabtmp;
 
-	i = 1;
 	tab_a.tab = malloc(sizeof(long) * (argc - 1));
 	if (!tab_a.tab)
 		return (0);
@@ -250,14 +247,14 @@ int	main(int argc, char **argv)
 	if (!tab_b.tab)
 		return (free(tab_a.tab), free(tab_b.tab), 0);
 	ft_init_tab(&tab_a, &tab_b, &tabtmp, argc - 1, argv);
-	//ft_display(&tab_a, &tab_b);
+	// ft_display(&tab_a, &tab_b);
 	ft_all(&tab_a, &tab_b, &tabtmp);
 	// ft_push_b(&tab_a, &tab_b);
 	// ft_push_b(&tab_a, &tab_b);
 	// ft_push_b(&tab_a, &tab_b);
-	// ft_reverse_rotate(&tab_b);
+	//ft_push_b(&tab_a, &tab_b);
 	//ft_reverse_rotate(&tab_a);
 	//printf("poslatnum = %d\n", tab_b.pos_last_num);
-	//ft_display(&tab_a, &tab_b);
+	// ft_display(&tab_a, &tab_b);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:11:15 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/08 14:24:29 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/14 17:18:25 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void ft_rotate(t_tab *tab)
 {
 	int	i;
 	int cln;
-	int	start;
 
 	i = 0;
 	while (i < tab->pos_last_num - 1)
