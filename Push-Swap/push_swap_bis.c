@@ -6,91 +6,123 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:39:13 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/14 18:17:26 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/16 16:01:57 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_second_sort_bis(t_tab *tab_a, t_tab *tab_b)
+int	ft_is_bigger(t_tab *tab)
 {
-	int	a;
-	int	b;
 	int	i;
-	int	j;
-	int	y;
+	int	big;
+
+	i = 0;
+	big = 0;
+	while (i <= tab->pos_last_num)
+	{
+		if (tab->tab[i] > tab->tab[big])
+			big = i;
+		i++;
+	}
+	return (big);
+}
+
+int	ft_find_next(t_tab *tab, int pivot)
+{
+	int	i;
 	int	pos;
 
-	b = tab_b->pos_last_num / 2;
-	if (tab_a->tab[0] > tab_a->tab[1])
-		ft_swap(tab_a);
+	i = 0;
+	pos = i;
+	while (i < tab->pos_last_num)
+	{
+		if (tab->tab[i] <= pivot)
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
+void	ft_second_sort_bis(t_tab *tab_a, t_tab *tab_b)
+{
+	int a;
+
 	while (tab_b->pos_last_num >= 0)
 	{
-		i = 0;
-		j = tab_b->pos_last_num + 1;
-		y = 0;
-		pos = 0;
-		while (y <= j)
-		{
-			if (tab_b->tab[y] > tab_b->tab[pos])
-				pos = y;
-			y++;;
-		}
-		a = tab_b->pos_last_num - pos + 1;
-		if (pos > (tab_b->pos_last_num / 2))
-		{
-			while (i < a)
-			{
-				ft_reverse_rotate(tab_b);
-				i++;
-			}
-		}
+		// ft_display(tab_a, tab_b);
+		a = ft_is_bigger(tab_b);
+		if (a == 0)
+			ft_push_a(tab_a, tab_b);
 		else
 		{
-			while (pos > 0)
+			if (a >= (tab_b->pos_last_num / 2))
 			{
-				ft_rotate(tab_b);
-				pos--;
+				while (tab_b->pos_last_num - a >= 0)
+				{
+					ft_reverse_rotate(tab_b, 1);
+					a++;
+				}
 			}
+			else
+			{
+				while (a > 0)
+				{
+					ft_rotate(tab_b, 1);
+					a--;
+				}
+			}
+			ft_push_a(tab_a, tab_b);
 		}
-		ft_push_a(tab_a, tab_b);
 	}
 }
 
 void	ft_first_sort_bis(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
 {
-	int	j;
-	int	s;
-	int	median;
-	int	mid;
+	int	i;
+	int	a;
+	int	x;
+	int	pivot;
 
-	mid = tab_a->pos_last_num / 2;
-	while (tab_a->pos_last_num > 1)
+	a = 1;
+	x = 0;
+	while (a <= 5)
 	{
-		s = (tab_a->pos_last_num + 1)/ 2;
-		median = tab_sort[tab_a->size - s];
-		if (median == tab_sort[tab_a->size - 1])
-			median--;
-		while (0 < s)
+		pivot = tab_sort[tab_a->size / 5 * a - 1];
+		i = tab_a->size / 5 - x;
+		// printf("i = %d\n", i);
+		while (i > 0)
 		{
-			j = 0;
-			if (tab_a->tab[0] < median)
+			// printf("pivot = %d\n", pivot);
+			// ft_display(tab_a, tab_b);
+			// printf("i = %d\n", i);
+			if (tab_a->tab[0] > tab_a->tab[1] && tab_b->tab[0] < tab_b->tab[1])
+				ft_swap_ss(tab_a, tab_b);
+			else if (tab_b->tab[0] < tab_b->tab[1])
+				ft_swap(tab_b, 1);
+			if (tab_a->tab[0] <= pivot)
 			{
 				ft_push_b(tab_a, tab_b);
-				//ft_display(tab_a, tab_b);
-				s--;
+				i--;
 			}
-			else if (tab_a->tab[tab_a->pos_last_num] < median)
-			{
-				ft_reverse_rotate(tab_a);
-				ft_push_b(tab_a, tab_b);
-				//ft_display(tab_a, tab_b);
-				if (tab_b->tab[0] < tab_b->tab[1])
-					ft_swap(tab_b);
-				s--;
-			}
-			else
-				ft_rotate(tab_a);
+			// else if (tab_a->tab[0] > pivot && tab_a->tab[0] < tab_sort[tab_a->size / 5 * (a + 1) - 1])
+			// {
+			// 	ft_push_b(tab_a, tab_b);
+			// 	if (tab_a->tab[0] > tab_sort[tab_a->size / 5 * (a + 1) - 1])
+			// 		ft_rotate_rr(tab_a, tab_b);
+			// 	else
+			// 		ft_rotate(tab_b, 1);
+			// 	x++;
+			// }
+			if (tab_a->tab[0] > tab_a->tab[tab_a->pos_last_num])
+				ft_rotate(tab_a, 1);
+			else if (tab_a->tab[0] > pivot && tab_b->tab[0] < tab_b->tab[tab_b->pos_last_num])
+				ft_rotate_rr(tab_a, tab_b);
+			else if (tab_b->tab[0] < tab_b->tab[tab_b->pos_last_num])
+				ft_rotate(tab_b, 1);
+			else if (tab_a->tab[0] >= pivot)
+				ft_rotate(tab_a, 1);
 		}
+		a++;
 	}
 }

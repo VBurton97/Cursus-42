@@ -6,13 +6,13 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:35:55 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/08 14:24:34 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/16 12:22:49 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_swap(t_tab *tab)
+void	ft_swap(t_tab *tab, int r)
 {
 	int	cln;
 
@@ -26,12 +26,13 @@ void	ft_swap(t_tab *tab)
 			tab->tab[1] = cln;
 		}
 	}
-	ft_printf("s%c\n", tab->colonne);
+	if (r == 1)
+		ft_printf("s%c\n", tab->colonne);
 }
 
 void	ft_swap_ss(t_tab *tab_a, t_tab *tab_b)
 {
-	ft_swap(tab_a);
-	ft_swap(tab_b);
+	ft_swap(tab_a, 0);
+	ft_swap(tab_b, 0);
 	ft_printf("ss\n");
 }
