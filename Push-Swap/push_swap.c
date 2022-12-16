@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:44:00 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/16 16:00:38 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/16 18:20:45 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ void	ft_all(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp)
 		return ;
 	ft_sort_tab(tabtmp, tab_sort);
 	ft_first_sort_bis(tab_a, tab_b, tab_sort);
-	// ft_second_sort_bis(tab_a, tab_b);
+	ft_second_sort_bis(tab_a, tab_b);
 }
 
 int	main(int argc, char **argv)
