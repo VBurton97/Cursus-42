@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:39:13 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/16 18:20:17 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/19 16:38:17 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,39 +83,31 @@ void	ft_first_sort_bis(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
 	int	a;
 	int	x;
 	int	y;
+	int	c;
 	int	pivot;
 
 	a = 1;
 	x = 0;
 	y = 0;
-	while (a <= 5)
+	c = 10;
+	while (a <= c)
 	{
-		pivot = tab_sort[tab_a->size / 5 * a - 1];
-		i = tab_a->size / 5 - x;
+		pivot = tab_sort[tab_a->size / c * a - 1];
+		i = tab_a->size / c - x;
 		while (x > 0)
 		{
-			if (tab_a->tab[0] > tab_sort[tab_a->size / 5 * (a + 1) - 1])
-				ft_reverse_rotate_rrr(tab_a, tab_b);
-			else
-				ft_reverse_rotate(tab_b, 1);
+			ft_reverse_rotate(tab_b, 1);
 			x--;
 		}
 		// printf("i = %d\n", i);
 		while (i > 0)
 		{
-			// printf("pivot = %d\n", pivot);
-			// ft_display(tab_a, tab_b);
-			// printf("i = %d\n", i);
-			if (tab_a->tab[0] > tab_a->tab[1] && tab_b->tab[0] < tab_b->tab[1])
-				ft_swap_ss(tab_a, tab_b);
-			else if (tab_b->tab[0] < tab_b->tab[1] && tab_b->tab[0] < pivot)
-				ft_swap(tab_b, 1);
 			if (tab_a->tab[0] <= pivot)
 			{
 				ft_push_b(tab_a, tab_b);
 				i--;
 			}
-			if (tab_a->tab[0] > pivot && tab_a->tab[0] < tab_sort[(tab_a->size / 5 ) * (a + 1) - 1])
+			else if (tab_a->tab[0] > pivot && tab_a->tab[0] < tab_sort[(tab_a->size / c ) * (a + 1) - 1])
 			{
 				ft_push_b(tab_a, tab_b);
 				y++;
@@ -123,21 +115,19 @@ void	ft_first_sort_bis(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
 			}
 			else if (tab_a->tab[0] > tab_a->tab[tab_a->pos_last_num])
 				ft_rotate(tab_a, 1);
-			else if (tab_a->tab[0] > pivot && tab_b->tab[0] < tab_b->tab[tab_b->pos_last_num] && tab_b->tab[0] > pivot)
-				ft_rotate_rr(tab_a, tab_b);
 			else if (tab_a->tab[0] > pivot)
 				ft_rotate(tab_a, 1);
-			// else if (tab_b->tab[0] < tab_b->tab[tab_b->pos_last_num])
-			// 	ft_rotate(tab_b, 1);
+			else if (tab_a->tab[0] >= pivot && tab_b->tab[0] > pivot && tab_b->tab[0] < tab_sort[(tab_a->size / c ) * (a + 1) - 1])
+				ft_rotate_rr(tab_a, tab_b);
 			else if (tab_a->tab[0] >= pivot)
 				ft_rotate(tab_a, 1);
-			if (tab_a->tab[ft_find_next(tab_a, tab_sort[tab_a->size / 5 * (a + 1) - 1])] <= pivot)
+			if (tab_a->tab[ft_find_next(tab_a, tab_sort[tab_a->size / c * (a + 1) - 1])] <= pivot)
 			{
+				if (a == 1 && tab_b->tab[0] > pivot)
+					y = 0;
 				while (y >= 0)
 				{
-					if (tab_b->tab[0] < tab_b->tab[1])
-						ft_swap(tab_b, 1);
-					if (tab_a->tab[0] > tab_sort[tab_a->size / 5 * (a + 1) - 1])
+					if (tab_a->tab[0] > tab_sort[tab_a->size / c * (a + 1) - 1])
 						ft_rotate_rr(tab_a, tab_b);
 					else
 						ft_rotate(tab_b, 1);
