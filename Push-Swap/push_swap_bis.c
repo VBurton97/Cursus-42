@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:39:13 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/19 22:24:40 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/19 22:38:19 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_second_sort_bis_bis(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
 					{
 						ft_push_a(tab_a, tab_b);
 						ft_rotate(tab_a, 1);
-						min = tab_sort[(tab_a->size / c) * a];
+						min = tab_sort[((tab_a->size / c) * a) + (tab_a->size / c) - i];
 						y++;
 					}
 					if (t - n >= max)
@@ -93,7 +93,7 @@ void	ft_second_sort_bis_bis(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
 					{
 						ft_push_a(tab_a, tab_b);
 						ft_rotate(tab_a, 1);
-						min = tab_sort[(tab_a->size / c) * a];
+						min = tab_sort[((tab_a->size / c) * a) + (tab_a->size / c) - i];
 						y++;
 						n++;
 					}
@@ -102,6 +102,7 @@ void	ft_second_sort_bis_bis(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
 					n++;
 				}
 			}
+			// ft_printf("min = %d\n", min);
 			if (tab_b->tab[0] < tab_a->tab[tab_a->pos_last_num - y + 1])
 			{
 				while (y > 0)
