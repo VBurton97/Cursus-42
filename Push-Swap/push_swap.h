@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:37:06 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/16 12:22:32 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/19 17:00:21 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ int		ft_seek_smalest(t_tab *tab);
 
 void	ft_first_sort_bis(t_tab *tab_a, t_tab *tab_b, long *tab_sort);
 void	ft_second_sort_bis(t_tab *tab_a, t_tab *tab_b);
+void	ft_second_sort_bis_bis(t_tab *tab_a, t_tab *tab_b, long *tab_sort);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:39:13 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/19 16:38:17 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/19 22:24:40 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,81 @@ int	ft_find_next(t_tab *tab, int pivot)
 		i++;
 	}
 	return (0);
+}
+
+void	ft_second_sort_bis_bis(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
+{
+	int	a;
+	int	c;
+	int	y;
+	int	i;
+	int	n;
+	int	t;
+	int	min;
+	int	max;
+	int	pivot;
+
+	c = 10;
+	a = c - 1;
+	y = 0;
+	while (a >= 0)
+	{
+		pivot = tab_sort[(tab_a->size / c) * a - 1];
+		min = tab_sort[(tab_a->size / c) * a];
+		i = tab_a->size / c;
+		while (i >= 0)
+		{
+			n = 0;
+			max = ft_is_bigger(tab_b);
+			t = tab_b->pos_last_num;
+			if (max > tab_b->pos_last_num / 2)
+			{
+				while (t - n >= max)
+				{
+					if (tab_b->tab[0] == min)
+					{
+						ft_push_a(tab_a, tab_b);
+						ft_rotate(tab_a, 1);
+						min = tab_sort[(tab_a->size / c) * a];
+						y++;
+					}
+					if (t - n >= max)
+						ft_reverse_rotate(tab_b, 1);
+					n++;
+				}
+			}
+			else
+			{
+				while (n < max)
+				{
+					if (tab_b->tab[0] == min)
+					{
+						ft_push_a(tab_a, tab_b);
+						ft_rotate(tab_a, 1);
+						min = tab_sort[(tab_a->size / c) * a];
+						y++;
+						n++;
+					}
+					if (n < max)
+						ft_rotate(tab_b, 1);
+					n++;
+				}
+			}
+			if (tab_b->tab[0] < tab_a->tab[tab_a->pos_last_num - y + 1])
+			{
+				while (y > 0)
+				{
+					ft_reverse_rotate(tab_a, 1);
+					y--;
+				}
+				ft_push_a(tab_a, tab_b);
+			}
+			else
+				ft_push_a(tab_a, tab_b);
+			i--;
+		}
+		a--;
+	}
 }
 
 void	ft_second_sort_bis(t_tab *tab_a, t_tab *tab_b)
@@ -107,7 +182,7 @@ void	ft_first_sort_bis(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
 				ft_push_b(tab_a, tab_b);
 				i--;
 			}
-			else if (tab_a->tab[0] > pivot && tab_a->tab[0] < tab_sort[(tab_a->size / c ) * (a + 1) - 1])
+			else if (tab_a->tab[0] > pivot && tab_a->tab[0] < tab_sort[(tab_a->size / (2 * c)) * (2 * a + 1) - 1])
 			{
 				ft_push_b(tab_a, tab_b);
 				y++;
@@ -117,17 +192,17 @@ void	ft_first_sort_bis(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
 				ft_rotate(tab_a, 1);
 			else if (tab_a->tab[0] > pivot)
 				ft_rotate(tab_a, 1);
-			else if (tab_a->tab[0] >= pivot && tab_b->tab[0] > pivot && tab_b->tab[0] < tab_sort[(tab_a->size / c ) * (a + 1) - 1])
+			else if (tab_a->tab[0] >= pivot && tab_b->tab[0] > pivot && tab_b->tab[0] < tab_sort[(tab_a->size / (2 * c)) * (2 * a + 1) - 1])
 				ft_rotate_rr(tab_a, tab_b);
 			else if (tab_a->tab[0] >= pivot)
 				ft_rotate(tab_a, 1);
-			if (tab_a->tab[ft_find_next(tab_a, tab_sort[tab_a->size / c * (a + 1) - 1])] <= pivot)
+			if (tab_a->tab[ft_find_next(tab_a, tab_sort[(tab_a->size / (2 * c)) * (2 * a + 1) - 1])] <= pivot)
 			{
 				if (a == 1 && tab_b->tab[0] > pivot)
 					y = 0;
 				while (y >= 0)
 				{
-					if (tab_a->tab[0] > tab_sort[tab_a->size / c * (a + 1) - 1])
+					if (tab_a->tab[0] > tab_sort[(tab_a->size / (2 * c)) * (2 * a + 1) - 1])
 						ft_rotate_rr(tab_a, tab_b);
 					else
 						ft_rotate(tab_b, 1);
