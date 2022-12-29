@@ -1,5 +1,5 @@
 ######### Name and Folder #########
-NAME 	:= libft.a
+NAME 	:= push_swap
 
 INC		:=	libft.h
 INCPRF	:= ft_printf.h

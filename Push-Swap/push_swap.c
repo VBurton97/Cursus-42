@@ -6,7 +6,7 @@
 /*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:44:00 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/29 19:28:15 by victor           ###   ########.fr       */
+/*   Updated: 2022/12/29 20:02:04 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_five(t_tab *tab_a, t_tab *tab_b)
 	while (i < 2)
 	{
 		s = ft_seek_smalest(tab_a);
-		if (s > 2)
+		if (s <= 2)
 		{
 			while (s-- > 0)
 				ft_rotate(tab_a, 1);
