@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
+/*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:37:06 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/19 17:00:21 by vburton          ###   ########.fr       */
+/*   Updated: 2022/12/29 19:28:27 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,16 @@
 # include <stdio.h>
 # include <stdlib.h>
 
+typedef struct s_data
+{
+	int	i;
+	int	a;
+	int	x;
+	int	y;
+	int	c;
+	int	pivot;
+}				t_data;
+
 typedef struct s_tab
 {
 	char	colonne;
@@ -27,6 +37,12 @@ typedef struct s_tab
 
 }				t_tab;
 
+int		ft_is_bigger(t_tab *tab);
+int		ft_find_next(t_tab *tab, int pivot);
+int		ft_seek_smalest(t_tab *tab);
+int		ft_seek_smalest(t_tab *tab);
+void	ft_init_tab(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp, int size, char **argv);
+void	ft_sort_tab(t_tab *tabtmp, long *tab);
 void	ft_swap(t_tab *tab, int r);
 void	ft_swap_ss(t_tab *tab_a, t_tab *tab_b);
 void	ft_rotate(t_tab *tab, int r);
@@ -36,10 +52,7 @@ void	ft_reverse_rotate(t_tab *tab, int r);
 void	ft_push_b(t_tab *tab_a, t_tab *tab_b);
 void	ft_push_a(t_tab *tab_a, t_tab *tab_b);
 void	ft_display(t_tab *tab_a, t_tab *tab_b);
-int		ft_seek_smalest(t_tab *tab);
-
-void	ft_first_sort_bis(t_tab *tab_a, t_tab *tab_b, long *tab_sort);
-void	ft_second_sort_bis(t_tab *tab_a, t_tab *tab_b);
-void	ft_second_sort_bis_bis(t_tab *tab_a, t_tab *tab_b, long *tab_sort);
+void	ft_first_sort(t_tab *tab_a, t_tab *tab_b, long *tab_sort);
+void	ft_second_sort(t_tab *tab_a, t_tab *tab_b);
 
 #endif
