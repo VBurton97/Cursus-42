@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 20:27:22 by vburton           #+#    #+#             */
-/*   Updated: 2023/01/03 20:57:50 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/04 17:01:33 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include <unistd.h>
 # include <fcntl.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <errno.h>
 # include "libft/libft.h"
 # include "ft_printf/ft_printf.h"
 
@@ -36,5 +39,8 @@ typedef struct s_pipex
 char	*get_path(char **path, char *cmd);
 char	*grep_path(char **envp);
 void	ft_close(t_pipex *pipex);
+void	sec_open_input(void);
+void	sec_open_output(void);
+void	sec_close(void);
 
 #endif
