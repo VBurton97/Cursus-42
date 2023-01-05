@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 20:27:22 by vburton           #+#    #+#             */
-/*   Updated: 2023/01/04 17:01:33 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/05 15:32:12 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,12 @@ typedef struct s_pipex
 char	*get_path(char **path, char *cmd);
 char	*grep_path(char **envp);
 void	ft_close(t_pipex *pipex);
-void	sec_open_input(void);
-void	sec_open_output(void);
-void	sec_close(void);
+void	sec_open_input(t_pipex *pipex);
+void	sec_open_output(t_pipex *pipex);
+void	sec_close(t_pipex *pipex);
+void	sec_dup2(t_pipex *pipex);
+void	sec_split(t_pipex *pipex);
+void	sec_path(t_pipex *pipex);
+void	sec_execve(t_pipex *pipex);
 
 #endif

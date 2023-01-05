@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:17:53 by victor            #+#    #+#             */
-/*   Updated: 2023/01/04 17:44:42 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/05 17:35:17 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,54 +14,56 @@
 
 void	ft_fils1(t_pipex *pipex, char **argv, char **envp)
 {
+	free(pipex->cmd2);
 	pipex->input = open(argv[1], O_RDONLY);
 	if (pipex->input == -1)
-		sec_open_input();
+		sec_open_input(pipex);
 	pipex->path = grep_path(envp);
 	pipex->cmd_path = ft_split(pipex->path, ':');
 	if (pipex->cmd_path == NULL)
-
+		sec_split(pipex);
 	pipex->final_file_path = get_path(pipex->cmd_path, pipex->cmd1[0]);
-	dup2(pipex->input, STDIN_FILENO);
-	dup2(pipex->fd[1], STDOUT_FILENO);
+	if (pipex->final_file_path == NULL)
+		sec_path(pipex);
+	if (dup2(pipex->input, STDIN_FILENO) == -1)
+		sec_dup2(pipex);
+	if (dup2(pipex->fd[1], STDOUT_FILENO) == -1)
+		sec_dup2(pipex);
 	if (close(pipex->fd[0]) == -1)
-		sec_close();
+		sec_close(pipex);
 	if (close(pipex->fd[1]) == -1)
-		sec_close();
+		sec_close(pipex);
 	if (close(pipex->input) == -1)
-		sec_close();
-	if (close(pipex->output) == -1)
-		sec_close();
+		sec_close(pipex);
 	if (execve(pipex->final_file_path, pipex->cmd1, NULL) == -1)
-	{
-		perror("Error while executing ft_fils1");
-		exit(1);
-	}
+		sec_execve(pipex);
 }
 
 void	ft_fils2(t_pipex *pipex, char **argv, char **envp)
 {
+	free(pipex->cmd2);
 	pipex->output = open(argv[4], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (pipex->output == -1)
-		sec_open_output();
+		sec_open_output(pipex);
 	pipex->path = grep_path(envp);
 	pipex->cmd_path = ft_split(pipex->path, ':');
+	if (pipex->cmd_path == NULL)
+		sec_split(pipex);
 	pipex->final_file_path = get_path(pipex->cmd_path, pipex->cmd2[0]);
-	dup2(pipex->fd[0], STDIN_FILENO);
-	dup2(pipex->output, STDOUT_FILENO);
+	if (pipex->final_file_path == NULL)
+		sec_path(pipex);
+	if (dup2(pipex->fd[0], STDIN_FILENO) == -1)
+		sec_dup2(pipex);
+	if (dup2(pipex->output, STDOUT_FILENO) == -1)
+		sec_dup2(pipex);
 	if (close(pipex->fd[0]) == -1)
-		sec_close();
+		sec_close(pipex);
 	if (close(pipex->fd[1]) == -1)
-		sec_close();
-	if (close(pipex->input) == -1)
-		sec_close();
+		sec_close(pipex);
 	if (close(pipex->output) == -1)
-		sec_close();
+		sec_close(pipex);
 	if (execve(pipex->final_file_path, pipex->cmd2, NULL) == -1)
-	{
-		perror("Error while executing ft_fils2");
-		exit(1);
-	}
+		sec_execve(pipex);
 }
 
 void	ft_exec(t_pipex	*pipex, char **argv, char **envp)
@@ -87,9 +89,9 @@ int	main(int argc, char **argv, char **envp)
 	pipex.cmd1 = ft_split(argv[2], ' ');
 	pipex.cmd2 = ft_split(argv[3], ' ');
 	if (pipex.cmd1 == NULL || pipex.cmd2 == NULL)
-		return (0);
+		sec_split(&pipex);
 	ft_exec(&pipex, argv, envp);
 	waitpid(pipex.pid1, NULL, 0);
 	waitpid(pipex.pid2, NULL, 0);
-	return(0);
+	return (0);
 }

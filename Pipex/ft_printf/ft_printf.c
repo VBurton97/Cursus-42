@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 16:35:14 by victor            #+#    #+#             */
-/*   Updated: 2022/12/05 11:30:36 by vburton          ###   ########lyon.fr   */
+/*   Updated: 2022/11/21 09:06:41 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,17 @@ int	ft_case(char c, va_list res, int len)
 	else if (c == 's')
 		len += ft_putstr(va_arg(res, char *));
 	else if (c == 'p')
-		len = ft_putnbr_base_hexa(va_arg(res, unsigned long long), len);
-	else if (c == 'd' || c == 'i')
+		len = ft_putnbr_base_exa(va_arg(res, unsigned long long), len);
+	else if (c == 'd')
+		len = ft_putnbr(va_arg(res, int), len);
+	else if (c == 'i')
 		len = ft_putnbr(va_arg(res, int), len);
 	else if (c == 'u')
 		len = ft_putnbr_unsigned(va_arg(res, int), len);
 	else if (c == 'x')
-		len = ft_putnbr_base(va_arg(res, unsigned long long), EXA_DOWN, len);
+		len = ft_putnbr_exa(va_arg(res, unsigned long long), EXA_DOWN, len);
 	else if (c == 'X')
-		len = ft_putnbr_base(va_arg(res, int), EXA_UP, len);
+		len = ft_putnbr_exa(va_arg(res, int), EXA_UP, len);
 	else if (c == '%')
 		len += ft_putchar('%');
 	return (len);
