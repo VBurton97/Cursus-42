@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 20:57:06 by vburton           #+#    #+#             */
-/*   Updated: 2023/01/05 17:41:00 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/06 10:46:20 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,11 @@ char	*grep_path(char **envp)
 
 void	ft_close(t_pipex *pipex)
 {
-	if (close(pipex->fd[0] == -1))
+	if (close(pipex->fd[0]) == -1)
 		sec_close(pipex);
-	if (close(pipex->fd[1] == -1))
+	if (close(pipex->fd[1]) == -1)
+		sec_close(pipex);
+	if (close(pipex->ft_pipe) == -1)
 		sec_close(pipex);
 	free(pipex->cmd1);
 	free(pipex->cmd2);
