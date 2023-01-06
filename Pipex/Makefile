@@ -23,6 +23,8 @@ RM 		:= 	rm -rf
 ########## Rules and dependency ###########
 OBJS 	:= 	${SRC:%.c=${DIR_OBJS}%.o}
 
+OBJS_B	:= ${SRC_BONUS:%.c=${DIR_OBJS}%.o}
+
 all: 		mklib ${NAME}
 
 ${DIR_OBJS}%.o:		%.c ${INC}
@@ -31,6 +33,9 @@ ${DIR_OBJS}%.o:		%.c ${INC}
 
 $(NAME):	${OBJS}
 			${CC} ${FLAGS} -o ${NAME} ${OBJS} ${PATH_LIBFT}libft.a ${PATH_PRINTF}libftprintf.a
+
+bonus :		${OBJS} ${OBJS_B}
+			${CC} ${FLAGS} -o ${NAME} ${OBJS} ${OBJS_B} ${PATH_LIBFT}libft.a ${PATH_PRINTF}libftprintf.a
 
 mklib:
 			make -j -C ${PATH_LIBFT}

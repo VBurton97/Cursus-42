@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:51:32 by vburton           #+#    #+#             */
-/*   Updated: 2023/01/06 15:17:06 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/06 16:27:54 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	sec_open_input(t_pipex *pipex)
 	perror("Error opening file");
 	free_split(pipex->cmd1);
 	free_split(pipex->cmd2);
-	exit(1);
+	exit(0);
 }
 
 void	sec_open_output(t_pipex *pipex)
@@ -25,7 +25,7 @@ void	sec_open_output(t_pipex *pipex)
 	perror("Error opening file");
 	free_split(pipex->cmd1);
 	free_split(pipex->cmd2);
-	exit(1);
+	exit(0);
 }
 
 void	sec_close(t_pipex *pipex)
@@ -35,7 +35,7 @@ void	sec_close(t_pipex *pipex)
 	free(pipex->final_file_path);
 	free_split(pipex->cmd1);
 	free_split(pipex->cmd2);
-	exit(1);
+	exit(0);
 }
 
 void	sec_dup2(t_pipex *pipex)
@@ -43,7 +43,7 @@ void	sec_dup2(t_pipex *pipex)
 	perror("Error duplicating the processus");
 	free_split(pipex->cmd1);
 	free_split(pipex->cmd2);
-	exit(1);
+	exit(0);
 }
 
 void	sec_split(t_pipex *pipex)
@@ -53,7 +53,7 @@ void	sec_split(t_pipex *pipex)
 		free_split(pipex->cmd1);
 	if (pipex->cmd2)
 		free_split(pipex->cmd2);
-	exit(1);
+	exit(0);
 }
 
 void	sec_path(t_pipex *pipex)
@@ -63,20 +63,20 @@ void	sec_path(t_pipex *pipex)
 	free(pipex->final_file_path);
 	free_split(pipex->cmd1);
 	free_split(pipex->cmd2);
-	exit(-1);
+	exit(0);
 }
 
 void	sec_execve(t_pipex *pipex)
 {
-	perror("Error while executing ft_fils2");
+	perror("Error while executing ft_fils2\n");
 	free_split(pipex->cmd1);
 	free_split(pipex->cmd2);
-	exit(1);
+	exit(0);
 }
 
 void	sec_fork(t_pipex *pipex)
 {
-	perror("An error as occured while forking\n");
+	perror("An error as occured while forking");
 	ft_close(pipex);
-	exit(1);
+	exit(0);
 }
