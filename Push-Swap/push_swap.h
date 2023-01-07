@@ -6,7 +6,7 @@
 /*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:37:06 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/29 19:28:27 by victor           ###   ########.fr       */
+/*   Updated: 2023/01/07 18:47:00 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,10 @@ void	ft_push_a(t_tab *tab_a, t_tab *tab_b);
 void	ft_display(t_tab *tab_a, t_tab *tab_b);
 void	ft_first_sort(t_tab *tab_a, t_tab *tab_b, long *tab_sort);
 void	ft_second_sort(t_tab *tab_a, t_tab *tab_b);
+
+void	ft_second_sort_bis(t_tab *tab_a, t_tab *tab_b);
+void	ft_sort_ten(t_tab *tab_a, t_tab *tab_b, long *tab_sort);
+void	ft_five(t_tab *tab_a, t_tab *tab_b);
+void	ft_three(t_tab *tab);
 
 #endif

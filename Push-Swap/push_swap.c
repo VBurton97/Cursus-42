@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
+/*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:44:00 by vburton           #+#    #+#             */
-/*   Updated: 2023/01/03 19:45:04 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/07 19:09:46 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,10 @@ void	ft_all(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp)
 	if (!tab_sort)
 		return ;
 	ft_sort_tab(tabtmp, tab_sort);
-	ft_first_sort(tab_a, tab_b, tab_sort);
-	ft_second_sort(tab_a, tab_b);
+	ft_five(tab_a, tab_b);
+	//ft_first_sort(tab_a, tab_b, tab_sort);
+	//ft_sort_ten(tab_a, tab_b, tab_sort);
+	//ft_second_sort_bis(tab_a, tab_b);
 	free(tab_sort);
 }
 

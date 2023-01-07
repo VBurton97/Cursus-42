@@ -6,11 +6,79 @@
 /*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:39:13 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/29 19:25:15 by victor           ###   ########.fr       */
+/*   Updated: 2023/01/07 19:08:18 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	ft_sort_ten(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
+{
+	int	i;
+	int	x;
+	int	val;
+	int	y;
+
+	y = 0;
+	while (y < 20)
+	{
+		i = 0;
+		x = 0;
+		val = tab_sort[tab_b->pos_last_num - 5];
+		while (i < 5)
+		{
+			if (tab_b->tab[0] >= val)
+				ft_push_a(tab_a, tab_b);
+			else
+			{
+				ft_rotate(tab_b, 1);
+				x++;
+			}
+			i++;
+		}
+		ft_five(tab_a, tab_b);
+		while (x > 1)
+		{
+			ft_reverse_rotate(tab_b, 1);
+			ft_push_a(tab_a, tab_b);
+			x--;
+		}
+		y++;
+	}
+}
+
+void	ft_second_sort_bis(t_tab *tab_a, t_tab *tab_b)
+{
+	int	i;
+
+	i = 0;
+	ft_push_a(tab_a, tab_b);
+	while (i < 20)
+	{
+		if (tab_b->tab[0] < tab_a->tab[0])
+			ft_push_a(tab_a, tab_b);
+		else
+		{
+			if (tab_a->tab[0] > tab_a->tab[tab_a->pos_last_num])
+			{
+				ft_rotate(tab_a, 1);
+				ft_push_a(tab_a, tab_b);
+				ft_rotate(tab_a, 1);
+			}
+			else if (tab_b->tab[0] > tab_a->tab[tab_a->pos_last_num])
+			{
+				ft_push_a(tab_a, tab_b);
+				ft_rotate(tab_a, 1);
+			}
+			else if (tab_b->tab[0] > tab_a->tab[0] && tab_b->tab[0] > tab_a->tab[1])
+			{
+				ft_push_a(tab_a, tab_b);
+				ft_swap(tab_a, 1);
+			}
+		}
+		i++;
+	}
+}
 
 void	ft_second_sort(t_tab *tab_a, t_tab *tab_b)
 {
@@ -18,7 +86,6 @@ void	ft_second_sort(t_tab *tab_a, t_tab *tab_b)
 
 	while (tab_b->pos_last_num >= 0)
 	{
-		// ft_display(tab_a, tab_b);
 		a = ft_is_bigger(tab_b);
 		if (a == 0)
 			ft_push_a(tab_a, tab_b);
