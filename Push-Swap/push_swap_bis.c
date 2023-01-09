@@ -3,80 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_bis.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:39:13 by vburton           #+#    #+#             */
-/*   Updated: 2023/01/07 19:08:18 by victor           ###   ########.fr       */
+/*   Updated: 2023/01/09 19:21:46 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	ft_sort_ten(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
+void	ft_sec_sort_bis(t_tab *tab_a, t_tab *tab_b, long *tab_sort, t_data *data)
 {
-	int	i;
-	int	x;
-	int	val;
-	int	y;
+	int a;
+	int	r;
+	int	min;
+	int	max;
+	int	n;
 
-	y = 0;
-	while (y < 20)
+	r = 0;
+	while (tab_b->pos_last_num > 0)
 	{
-		i = 0;
-		x = 0;
-		val = tab_sort[tab_b->pos_last_num - 5];
-		while (i < 5)
+		n = tab_a->size / data->chunk;
+		max = tab_sort[tab_b->pos_last_num];
+		min = tab_sort[tab_b->pos_last_num - tab_a->size / data->number_of_chunk + 1];
+		while (n > 0)
 		{
-			if (tab_b->tab[0] >= val)
+			a = ft_is_bigger(tab_b);
+			if (a == 0)
+			{
 				ft_push_a(tab_a, tab_b);
+				max--;
+				n--;
+			}
 			else
 			{
-				ft_rotate(tab_b, 1);
-				x++;
+				if (a >= (tab_b->pos_last_num / 2))
+				{
+					while (tab_b->pos_last_num - a >= 0)
+					{
+						ft_reverse_rotate(tab_b, 1);
+						if (tab_b->tab[0] == min)
+						{
+							ft_push_a(tab_a, tab_b);
+							ft_rotate(tab_a, 1);
+							min++;
+							r++;
+							a++;
+							n--;
+						}
+						a++;
+					}
+				}
+				else
+				{
+					while (a > 0)
+					{
+						ft_rotate(tab_b, 1);
+						if (tab_b->tab[0] == min)
+						{
+							ft_push_a(tab_a, tab_b);
+							ft_rotate(tab_a, 1);
+							min++;
+							r++;
+							a--;
+							n--;
+						}
+						a--;
+					}
+				}
+				ft_push_a(tab_a, tab_b);
+				max--;
+				n--;
 			}
-			i++;
 		}
-		ft_five(tab_a, tab_b);
-		while (x > 1)
+		while (r > 0)
 		{
-			ft_reverse_rotate(tab_b, 1);
-			ft_push_a(tab_a, tab_b);
-			x--;
+			ft_reverse_rotate(tab_a, 1);
+			r--;
 		}
-		y++;
-	}
-}
-
-void	ft_second_sort_bis(t_tab *tab_a, t_tab *tab_b)
-{
-	int	i;
-
-	i = 0;
-	ft_push_a(tab_a, tab_b);
-	while (i < 20)
-	{
-		if (tab_b->tab[0] < tab_a->tab[0])
-			ft_push_a(tab_a, tab_b);
-		else
-		{
-			if (tab_a->tab[0] > tab_a->tab[tab_a->pos_last_num])
-			{
-				ft_rotate(tab_a, 1);
-				ft_push_a(tab_a, tab_b);
-				ft_rotate(tab_a, 1);
-			}
-			else if (tab_b->tab[0] > tab_a->tab[tab_a->pos_last_num])
-			{
-				ft_push_a(tab_a, tab_b);
-				ft_rotate(tab_a, 1);
-			}
-			else if (tab_b->tab[0] > tab_a->tab[0] && tab_b->tab[0] > tab_a->tab[1])
-			{
-				ft_push_a(tab_a, tab_b);
-				ft_swap(tab_a, 1);
-			}
-		}
-		i++;
 	}
 }
 
@@ -114,11 +118,11 @@ void	ft_second_sort(t_tab *tab_a, t_tab *tab_b)
 
 void ft_first_sort_last_if(t_tab *tab_a, t_tab *tab_b, long *tab_sort, t_data *data)
 {
-	if (data->a == 1 && tab_b->tab[0] > data->pivot)
+	if (data->chunk == 1 && tab_b->tab[0] > data->pivot)
 		data->y = 0;
 	while (data->y >= 0)
 	{
-		if (tab_a->tab[0] > tab_sort[(tab_a->size / (2 * data->c)) * (2 * data->a + 1) - 1])
+		if (tab_a->tab[0] > tab_sort[(tab_a->size / (2 * data->number_of_chunk)) * (2 * data->chunk + 1) - 1])
 			ft_rotate_rr(tab_a, tab_b);
 		else
 			ft_rotate(tab_b, 1);
@@ -128,24 +132,24 @@ void ft_first_sort_last_if(t_tab *tab_a, t_tab *tab_b, long *tab_sort, t_data *d
 
 void ft_first_sort_bis(t_tab *tab_a, t_tab *tab_b, long *tab_sort, t_data *data)
 {
-	while (data->i > 0)
+	while (data->numbers_left_in_chunk > 0)
 	{
 		if (tab_a->tab[0] <= data->pivot)
 		{
 			ft_push_b(tab_a, tab_b);
-			data->i--;
+			data->numbers_left_in_chunk--;
 		}
-		else if (tab_a->tab[0] > data->pivot && tab_a->tab[0] < tab_sort[(tab_a->size / (2 * data->c)) * (2 * data->a + 1) - 1])
+		else if (tab_a->tab[0] > data->pivot && tab_a->tab[0] < data->pivot_sup)
 		{
 			ft_push_b(tab_a, tab_b);
 			data->y++;
-			data->x++;
+			data->count_reverse++;
 		}
 		else if (tab_a->tab[0] > data->pivot)
 			ft_rotate(tab_a, 1);
-		else if (tab_a->tab[0] >= data->pivot && tab_b->tab[0] > data->pivot && tab_b->tab[0] < tab_sort[(tab_a->size / (2 * data->c)) * (2 * data->a + 1) - 1])
+		else if (tab_a->tab[0] >= data->pivot && tab_b->tab[0] > data->pivot && tab_b->tab[0] < data->pivot_sup)
 			ft_rotate_rr(tab_a, tab_b);
-		if (tab_a->tab[ft_find_next(tab_a, tab_sort[(tab_a->size / (2 * data->c)) * (2 * data->a + 1) - 1])] <= data->pivot)
+		if (tab_a->tab[ft_find_next(tab_a, data->pivot_sup)] <= data->pivot)
 		{
 			ft_first_sort_last_if(tab_a, tab_b, tab_sort, data);
 		}
@@ -156,20 +160,26 @@ void	ft_first_sort(t_tab *tab_a, t_tab *tab_b, long *tab_sort)
 {
 	t_data	data;
 
-	data.a = 1;
-	data.x = 0;
+	data.chunk = 1;
+	data.count_reverse = 0;
 	data.y = 0;
-	data.c = 10;
-	while (data.a <= data.c)
+	if (tab_a->size == 100)
+		data.number_of_chunk = 5;
+	else
+		data.number_of_chunk = 10;
+	while (data.chunk <= data.number_of_chunk)
 	{
-		data.pivot = tab_sort[tab_a->size / data.c * data.a - 1];
-		data.i = tab_a->size / data.c - data.x;
-		while (data.x > 0)
+		data.pivot = tab_sort[tab_a->size / data.number_of_chunk * data.chunk - 1];
+		data.pivot_sup = tab_sort[(tab_a->size / (2 * data.number_of_chunk)) * (2 * data.chunk + 1) - 1];
+		data.numbers_left_in_chunk = tab_a->size / data.number_of_chunk - data.count_reverse;
+		while (data.count_reverse > 0)
 		{
 			ft_reverse_rotate(tab_b, 1);
-			data.x--;
+			data.count_reverse--;
 		}
 		ft_first_sort_bis(tab_a, tab_b, tab_sort, &data);
-		data.a++;
+		data.chunk++;
 	}
+	ft_sec_sort_bis(tab_a, tab_b, tab_sort, &data);
 }
+

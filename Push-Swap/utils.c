@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 19:24:55 by victor            #+#    #+#             */
-/*   Updated: 2022/12/29 19:28:21 by victor           ###   ########.fr       */
+/*   Updated: 2023/01/09 13:19:26 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	ft_sort_tab(t_tab *tabtmp, long *tab)
 	i = 0;
 	while (i <= tabtmp->pos_last_num)
 	{
-		s = ft_seek_smalest(tabtmp);
+		s = ft_seek_smallest(tabtmp);
 		tab[i] = tabtmp->tab[s];
 		tabtmp->tab[s] = 2147483649;
 		i++;
 	}
 }
 
-int ft_seek_smalest(t_tab *tab)
+int ft_seek_smallest(t_tab *tab)
 {
 	int	i;
 	int	smallest;

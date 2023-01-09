@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:44:00 by vburton           #+#    #+#             */
-/*   Updated: 2023/01/03 19:45:04 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/09 19:21:32 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,21 @@ void	ft_five(t_tab *tab_a, t_tab *tab_b)
 {
 	int	i;
 	int	s;
+	int	smallest;
 
 	i = 0;
 	while (i < 2)
 	{
-		s = ft_seek_smalest(tab_a);
+		s = ft_seek_smallest(tab_a);
+		smallest = tab_a->tab[s];
 		if (s <= 2)
 		{
 			while (s-- > 0)
 				ft_rotate(tab_a, 1);
 		}
-		else if (s == 4)
-			ft_reverse_rotate(tab_a, 1);
-		else if (s == 3)
-		{
-			ft_reverse_rotate(tab_a, 1);
-			ft_reverse_rotate(tab_a, 1);
+		else {
+			while (tab_a->tab[0] != smallest)
+				ft_reverse_rotate(tab_a, 1);
 		}
 		ft_push_b(tab_a, tab_b);
 		i++;
@@ -73,13 +72,20 @@ void	ft_five(t_tab *tab_a, t_tab *tab_b)
 void	ft_all(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp)
 {
 	long	*tab_sort;
+	int		t;
 
+	t = tab_a->size % 10;
 	tab_sort = malloc(sizeof(long) * tab_a->size);
 	if (!tab_sort)
 		return ;
 	ft_sort_tab(tabtmp, tab_sort);
 	ft_first_sort(tab_a, tab_b, tab_sort);
-	ft_second_sort(tab_a, tab_b);
+	while (t != 0)
+	{
+		ft_push_b(tab_a, tab_b);
+		t--;
+	}
+	// ft_second_sort(tab_a, tab_b);
 	free(tab_sort);
 }
 

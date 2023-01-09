@@ -32,10 +32,10 @@ all: 		mklib ${NAME}
 
 ${DIR_OBJS}%.o:		%.c ${INC}
 			mkdir -p $(@D)
-			${CC} ${FLAGS} -c $< -o $@
+			${CC}  -c $< -o $@
 
 $(NAME):	${OBJS}
-			${CC} ${FLAGS} -o ${NAME} ${OBJS} ${PATH_LIBFT}libft.a ${PATH_PRINTF}libftprintf.a
+			${CC}  -o ${NAME} ${OBJS} ${PATH_LIBFT}libft.a ${PATH_PRINTF}libftprintf.a
 
 mklib:
 			make -j -C ${PATH_LIBFT}
