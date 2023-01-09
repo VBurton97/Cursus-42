@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 14:29:29 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/21 18:34:57 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/21 09:02:16 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	ft_putchar(char c);
 int	ft_putstr(char *s);
 int	ft_putnbr(int n, int len);
 int	ft_printf(const char *str, ...);
-int	ft_putnbr_base(unsigned int nbr, char *base, int len);
-int	ft_putnbr_base_hexa(unsigned long long nbr, int len);
+int	ft_putnbr_exa(unsigned int nbr, char *base, int len);
+int	ft_putnbr_base_exa(unsigned long long nbr, int len);
 int	ft_putnbr_unsigned(int n, int len);
 
 #endif

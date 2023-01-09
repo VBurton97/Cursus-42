@@ -66,6 +66,7 @@ OBJS 	:= 	${SRC:%.c=${DIR_OBJS}%.o}
 
 OBJS_B	:= 	${BONUS:%.c=${DIR_OBJS}%.o}
 
+
 all: 		${NAME}
 
 ${DIR_OBJS}%.o:		%.c ${INC} Makefile

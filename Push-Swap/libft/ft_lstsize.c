@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
+/*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/08 14:31:30 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/18 15:19:11 by vburton          ###   ########.fr       */
+/*   Created: 2022/11/14 09:27:46 by vburton           #+#    #+#             */
+/*   Updated: 2022/11/16 20:57:53 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_putnbr_base(unsigned int nbr, char *base, int len)
+int	ft_lstsize(t_list *lst)
 {
-	if (nbr < 16 && nbr >= 0)
-		write(1, &base[nbr], 1);
-	else
+	int	i;
+
+	i = 0;
+	while (lst)
 	{
-		len = ft_putnbr_base(nbr / 16, base, len);
-		ft_putnbr_base(nbr % 16, base, len);
+		lst = lst->next;
+		i++;
 	}
-	return (++len);
+	return (i);
 }

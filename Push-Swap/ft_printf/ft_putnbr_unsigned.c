@@ -1,42 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_unsigned.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:31:30 by vburton           #+#    #+#             */
-/*   Updated: 2022/11/17 19:13:30 by vburton          ###   ########.fr       */
+/*   Updated: 2022/11/18 15:38:43 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putnbr(int n, int len)
+int	ft_putnbr_unsigned(int n, int len)
 {
-	if (n == INT_MIN)
+	unsigned long int	nbis;
+
+	nbis = (unsigned)n;
+	if (nbis < 10)
 	{
-		ft_putstr("-2147483648");
-		len += 11;
+		nbis = nbis + 48;
+		ft_putchar(nbis);
 	}
-	if (n > INT_MIN && n <= INT_MAX)
+	else
 	{
-		if (n < 10 && n >= 0)
-		{
-			n = n + 48;
-			ft_putchar(n);
-		}
-		else if (n < 0)
-		{
-			ft_putchar('-');
-			len = ft_putnbr(n * -1, len);
-		}
-		else
-		{
-			len = ft_putnbr(n / 10, len);
-			ft_putnbr(n % 10, len);
-		}
-		len++;
+		len = ft_putnbr(nbis / 10, len);
+		ft_putnbr(nbis % 10, len);
 	}
-	return (len);
+	return (++len);
 }
