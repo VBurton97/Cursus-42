@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 19:03:34 by vburton           #+#    #+#             */
-/*   Updated: 2023/01/10 15:26:06 by vburton          ###   ########.fr       */
+/*   Created: 2023/01/10 16:32:16 by vburton           #+#    #+#             */
+/*   Updated: 2023/01/10 16:42:17 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+long	ft_atol(const char *str)
 {
-	size_t	i;
-	size_t	j;
-	size_t	size_tot;
-	char	*res;
+	int				i;
+	int				a;
+	long long int	nb;
 
 	i = 0;
-	j = 0;
-	if (!s1 || !s2)
-		return (NULL);
-	size_tot = ft_strlen((char *)s1);
-	if ((size_tot + ft_strlen((char *)s2)) >= SIZE_MAX)
-		return (NULL);
-	res = malloc(sizeof(char) * (size_tot + 1));
-	if (!res)
-		return (NULL);
-	while (s1[i])
+	a = 1;
+	nb = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		res[i] = s1[i];
+		if (str[i] == '-')
+			a = a * -1;
 		i++;
 	}
-	while (s2[j])
-		res[i++] = s2[j++];
-	res[i] = '\0';
-	return (res);
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		nb = nb * 10 + str[i] - '0';
+		i++;
+	}
+	return ((long)nb * a);
 }

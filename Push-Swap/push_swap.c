@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:44:00 by vburton           #+#    #+#             */
-/*   Updated: 2023/01/09 19:21:32 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/10 17:54:25 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	ft_five(t_tab *tab_a, t_tab *tab_b)
 			while (s-- > 0)
 				ft_rotate(tab_a, 1);
 		}
-		else {
+		else
+		{
 			while (tab_a->tab[0] != smallest)
 				ft_reverse_rotate(tab_a, 1);
 		}
@@ -85,7 +86,7 @@ void	ft_all(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp)
 		ft_push_b(tab_a, tab_b);
 		t--;
 	}
-	// ft_second_sort(tab_a, tab_b);
+	ft_second_sort(tab_a, tab_b);
 	free(tab_sort);
 }
 
@@ -94,7 +95,29 @@ int	main(int argc, char **argv)
 	t_tab	tab_a;
 	t_tab	tab_b;
 	t_tab	tabtmp;
+	int		t;
+	int	i;
 
+	i = 0;
+	if (argc == 2)
+	{
+		argv = ft_split(argv[1], ' ');
+		while (argv[i])
+		{
+			ft_printf("%s\n", argv[i]);
+			i++;
+		}
+		argc = i;
+		ft_printf("argc = %d\n", argc);
+	}
+	// else
+	// {
+	// 	while (i < argc)
+	// 	{
+	// 		argv[i] = argv[i + 1];
+	// 		i++;
+	// 	}
+	// }
 	tab_a.tab = malloc(sizeof(long) * (argc - 1));
 	if (!tab_a.tab)
 		return (0);
@@ -105,6 +128,9 @@ int	main(int argc, char **argv)
 	if (!tab_b.tab)
 		return (free(tab_a.tab), free(tab_b.tab), 0);
 	ft_init_tab(&tab_a, &tab_b, &tabtmp, argc - 1, argv);
+	t = ft_check_input(argc, argv, &tab_a);
+	if (t == 0)
+		return (ft_printf("Error\n"), 0);
 	if (argc == 4)
 		ft_three(&tab_a);
 	else if (argc == 6)

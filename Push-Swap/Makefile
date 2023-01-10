@@ -15,7 +15,8 @@ SRC 	:=	push_swap.c \
 			reverse_rotate.c \
 			rotate.c \
 			swap.c \
-			utils.c
+			utils.c \
+			utils_2.c
 
 
 ######### Compileur and various options ########

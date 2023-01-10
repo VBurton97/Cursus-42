@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:35:55 by vburton           #+#    #+#             */
-/*   Updated: 2022/12/16 12:22:49 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/10 15:36:42 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	ft_swap(t_tab *tab, int r)
 	{
 		if (tab->tab[0] && tab->tab[1])
 		{
-
 			cln = tab->tab[0];
 			tab->tab[0] = tab->tab[1];
 			tab->tab[1] = cln;

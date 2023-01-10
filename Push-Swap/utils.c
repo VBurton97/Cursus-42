@@ -6,13 +6,13 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 19:24:55 by victor            #+#    #+#             */
-/*   Updated: 2023/01/09 13:19:26 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/10 17:54:01 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int ft_is_bigger(t_tab *tab)
+int	ft_is_bigger(t_tab *tab)
 {
 	int	i;
 	int	big;
@@ -28,7 +28,7 @@ int ft_is_bigger(t_tab *tab)
 	return (big);
 }
 
-int ft_find_next(t_tab *tab, int pivot)
+int	ft_find_next(t_tab *tab, int pivot)
 {
 	int	i;
 	int	pos;
@@ -59,7 +59,7 @@ void	ft_sort_tab(t_tab *tabtmp, long *tab)
 	}
 }
 
-int ft_seek_smallest(t_tab *tab)
+int	ft_seek_smallest(t_tab *tab)
 {
 	int	i;
 	int	smallest;
@@ -75,7 +75,8 @@ int ft_seek_smallest(t_tab *tab)
 	return (smallest);
 }
 
-void	ft_init_tab(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp, int size, char **argv)
+void	ft_init_tab(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp, \
+											int size, char **argv)
 {
 	int	i;
 
