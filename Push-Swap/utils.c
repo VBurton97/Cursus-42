@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 19:24:55 by victor            #+#    #+#             */
-/*   Updated: 2023/01/10 17:54:01 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/10 18:15:05 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ int	ft_seek_smallest(t_tab *tab)
 }
 
 void	ft_init_tab(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp, \
-											int size, char **argv)
+										int size, char **argv)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	tab_a->colonne = 'a';
 	tab_b->colonne = 'b';
 	tab_a->size = size;
@@ -91,14 +91,14 @@ void	ft_init_tab(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp, \
 	tabtmp->pos_last_num = size - 1;
 	while (i <= size)
 	{
-		tab_a->tab[i - 1] = ft_atoi(argv[i]);
-		tabtmp->tab[i - 1] = ft_atoi(argv[i]);
+		tab_a->tab[i] = ft_atoi(argv[i]);
+		tabtmp->tab[i] = ft_atoi(argv[i]);
 		i++;
 	}
-	i = 1;
-	while (i <= size)
+	i = 0;
+	while (i < size)
 	{
-		tab_b->tab[i - 1] = 0;
+		tab_b->tab[i] = 0;
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:50:34 by vburton           #+#    #+#             */
-/*   Updated: 2023/01/10 17:56:11 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/10 18:17:08 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	check_extrem(char **argv)
 
 int	ft_check_input(int argc, char **argv, t_tab *tab)
 {
-	if (argc < 2)
+	if (argc < 1)
 		return (0);
 	if (check_duplicate(tab) == 0 || check_number(argv) == 0 || check_extrem(argv) == 0)
 		return (0);

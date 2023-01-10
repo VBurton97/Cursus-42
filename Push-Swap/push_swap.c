@@ -6,7 +6,7 @@
 /*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:44:00 by vburton           #+#    #+#             */
-/*   Updated: 2023/01/10 17:54:25 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/10 18:17:29 by vburton          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,36 +104,35 @@ int	main(int argc, char **argv)
 		argv = ft_split(argv[1], ' ');
 		while (argv[i])
 		{
-			ft_printf("%s\n", argv[i]);
 			i++;
 		}
-		argc = i;
-		ft_printf("argc = %d\n", argc);
+		argc--;
 	}
-	// else
-	// {
-	// 	while (i < argc)
-	// 	{
-	// 		argv[i] = argv[i + 1];
-	// 		i++;
-	// 	}
-	// }
-	tab_a.tab = malloc(sizeof(long) * (argc - 1));
+	else
+	{
+		while (i < argc - 1)
+		{
+			argv[i] = argv[i + 1];
+			i++;
+		}
+		argc--;
+	}
+	tab_a.tab = malloc(sizeof(long) * (argc));
 	if (!tab_a.tab)
 		return (0);
-	tab_b.tab = malloc(sizeof(long) * (argc - 1));
+	tab_b.tab = malloc(sizeof(long) * (argc));
 	if (!tab_b.tab)
 		return (free(tab_a.tab), tab_a.tab = 0, 0);
-	tabtmp.tab = malloc(sizeof(long) * (argc - 1));
+	tabtmp.tab = malloc(sizeof(long) * (argc));
 	if (!tab_b.tab)
 		return (free(tab_a.tab), free(tab_b.tab), 0);
-	ft_init_tab(&tab_a, &tab_b, &tabtmp, argc - 1, argv);
+	ft_init_tab(&tab_a, &tab_b, &tabtmp, argc, argv);
 	t = ft_check_input(argc, argv, &tab_a);
 	if (t == 0)
 		return (ft_printf("Error\n"), 0);
-	if (argc == 4)
+	if (argc == 3)
 		ft_three(&tab_a);
-	else if (argc == 6)
+	else if (argc == 5)
 		ft_five(&tab_a, &tab_b);
 	else
 		ft_all(&tab_a, &tab_b, &tabtmp);
