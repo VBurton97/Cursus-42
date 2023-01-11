@@ -22,7 +22,7 @@ SRC 	:=	push_swap.c \
 ######### Compileur and various options ########
 CC 		:=	 cc
 
-FLAGS 	:= 	-Wextra -Werror -Wall
+FLAGS 	:= 	-Wextra -Werror -Wall #-fsanitize=address -g3
 
 RM 		:= 	rm -rf
 

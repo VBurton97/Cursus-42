@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
+/*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 13:50:34 by vburton           #+#    #+#             */
-/*   Updated: 2023/01/10 18:17:08 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/11 19:21:32 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,12 @@ int	ft_check_input(int argc, char **argv, t_tab *tab)
 	if (check_duplicate(tab) == 0 || check_number(argv) == 0 || check_extrem(argv) == 0)
 		return (0);
 	return (1);
+}
+
+void	ft_free(t_tab *tab_a, t_tab *tab_b, char **argvB)
+{
+	free(argvB);
+	free(tab_a->tab);
+	free(tab_a->tabtmp);
+	free(tab_b->tab);
 }

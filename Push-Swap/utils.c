@@ -3,30 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
+/*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 19:24:55 by victor            #+#    #+#             */
-/*   Updated: 2023/01/10 18:15:05 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/11 19:38:59 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	ft_is_bigger(t_tab *tab)
-{
-	int	i;
-	int	big;
 
-	i = 0;
-	big = 0;
-	while (i <= tab->pos_last_num)
-	{
-		if (tab->tab[i] > tab->tab[big])
-			big = i;
-		i++;
-	}
-	return (big);
-}
 
 int	ft_find_next(t_tab *tab, int pivot)
 {
@@ -53,8 +39,8 @@ void	ft_sort_tab(t_tab *tabtmp, long *tab)
 	while (i <= tabtmp->pos_last_num)
 	{
 		s = ft_seek_smallest(tabtmp);
-		tab[i] = tabtmp->tab[s];
-		tabtmp->tab[s] = 2147483649;
+		tab[i] = tabtmp->tabtmp[s];
+		tabtmp->tabtmp[s] = 2147483647;
 		i++;
 	}
 }
@@ -75,8 +61,34 @@ int	ft_seek_smallest(t_tab *tab)
 	return (smallest);
 }
 
-void	ft_init_tab(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp, \
-										int size, char **argv)
+char **ft_argv(int	argc, char **argv)
+{
+	int		i;
+	char	**argvB;
+
+	i = 0;
+	if (argc == 2)
+	{
+		argvB = ft_split(argv[1], ' ');
+		if (!argvB)
+			return(NULL);
+	}
+	else
+	{
+		argvB = malloc(sizeof(char *) * (argc));
+		if (!argvB)
+			return(NULL);
+		while (i < argc - 1)
+		{
+			argvB[i] = argv[i + 1];
+			i++;
+		}
+		argvB[i] = NULL;
+	}
+	return (argvB);
+}
+
+void	ft_init_tab(t_tab *tab_a, t_tab *tab_b, int size, char **argv)
 {
 	int	i;
 
@@ -87,12 +99,10 @@ void	ft_init_tab(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp, \
 	tab_a->pos_last_num = size - 1;
 	tab_b->size = size;
 	tab_b->pos_last_num = -1;
-	tabtmp->size = size;
-	tabtmp->pos_last_num = size - 1;
-	while (i <= size)
+	while (i < size)
 	{
 		tab_a->tab[i] = ft_atoi(argv[i]);
-		tabtmp->tab[i] = ft_atoi(argv[i]);
+		tab_a->tabtmp[i] = ft_atoi(argv[i]);
 		i++;
 	}
 	i = 0;

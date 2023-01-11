@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap_bis.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
+/*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:39:13 by vburton           #+#    #+#             */
-/*   Updated: 2023/01/10 15:42:11 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/11 18:16:20 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+int	ft_is_bigger(t_tab *tab)
+{
+	int	i;
+	int	big;
+
+	i = 0;
+	big = 0;
+	while (i <= tab->pos_last_num)
+	{
+		if (tab->tab[i] > tab->tab[big])
+			big = i;
+		i++;
+	}
+	return (big);
+}
 
 void	ft_second_sort(t_tab *tab_a, t_tab *tab_b)
 {

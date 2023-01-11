@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vburton < vburton@student.42lyon.fr>       +#+  +:+       +#+        */
+/*   By: victor <victor@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 10:44:00 by vburton           #+#    #+#             */
-/*   Updated: 2023/01/10 18:17:29 by vburton          ###   ########.fr       */
+/*   Updated: 2023/01/11 19:39:49 by victor           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_five(t_tab *tab_a, t_tab *tab_b)
 	ft_push_a(tab_a, tab_b);
 }
 
-void	ft_all(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp)
+void	ft_all(t_tab *tab_a, t_tab *tab_b)
 {
 	long	*tab_sort;
 	int		t;
@@ -78,8 +78,8 @@ void	ft_all(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp)
 	t = tab_a->size % 10;
 	tab_sort = malloc(sizeof(long) * tab_a->size);
 	if (!tab_sort)
-		return ;
-	ft_sort_tab(tabtmp, tab_sort);
+		return (free(tab_a->tab), free(tab_b->tab), free(tab_a->tabtmp));
+	ft_sort_tab(tab_a, tab_sort);
 	ft_first_sort(tab_a, tab_b, tab_sort);
 	while (t != 0)
 	{
@@ -89,52 +89,48 @@ void	ft_all(t_tab *tab_a, t_tab *tab_b, t_tab *tabtmp)
 	ft_second_sort(tab_a, tab_b);
 	free(tab_sort);
 }
-
-int	main(int argc, char **argv)
+int	ft_execute(int	argc, char **argv, t_tab *tab_a, t_tab *tab_b)
 {
-	t_tab	tab_a;
-	t_tab	tab_b;
-	t_tab	tabtmp;
 	int		t;
-	int	i;
-
-	i = 0;
-	if (argc == 2)
-	{
-		argv = ft_split(argv[1], ' ');
-		while (argv[i])
-		{
-			i++;
-		}
-		argc--;
-	}
-	else
-	{
-		while (i < argc - 1)
-		{
-			argv[i] = argv[i + 1];
-			i++;
-		}
-		argc--;
-	}
-	tab_a.tab = malloc(sizeof(long) * (argc));
-	if (!tab_a.tab)
+	
+	tab_a->tab = malloc(sizeof(long) * (argc));
+	if (!tab_a->tab)
 		return (0);
-	tab_b.tab = malloc(sizeof(long) * (argc));
-	if (!tab_b.tab)
-		return (free(tab_a.tab), tab_a.tab = 0, 0);
-	tabtmp.tab = malloc(sizeof(long) * (argc));
-	if (!tab_b.tab)
-		return (free(tab_a.tab), free(tab_b.tab), 0);
-	ft_init_tab(&tab_a, &tab_b, &tabtmp, argc, argv);
-	t = ft_check_input(argc, argv, &tab_a);
+	tab_b->tab = malloc(sizeof(long) * (argc));
+	if (!tab_b->tab)
+		return (free(tab_a->tab), 0);
+	tab_a->tabtmp = malloc(sizeof(long) * (argc));
+	if (!tab_b->tab)
+		return (free(tab_a->tab), free(tab_b->tab), 0);
+	ft_init_tab(tab_a, tab_b, argc, argv);
+	t = ft_check_input(argc, argv, tab_a);
 	if (t == 0)
 		return (ft_printf("Error\n"), 0);
 	if (argc == 3)
-		ft_three(&tab_a);
+		ft_three(tab_a);
 	else if (argc == 5)
-		ft_five(&tab_a, &tab_b);
+		ft_five(tab_a, tab_b);
 	else
-		ft_all(&tab_a, &tab_b, &tabtmp);
+		ft_all(tab_a, tab_b);
+	return (1);
+}
+
+int	main(int argc, char **argv)
+{
+	int		i;
+	int		m;
+	char	**argvB;
+	t_tab	tab_a;
+	t_tab	tab_b;
+
+	i = 0;
+	argvB = ft_argv(argc, argv);
+	if (!argvB)
+		return (0);
+	while (argvB[i])
+			i++;
+	argc = i;
+	ft_execute(argc, argvB, &tab_a, &tab_b);
+	ft_free(&tab_a, &tab_b, argvB);
 	return (0);
 }
